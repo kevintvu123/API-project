@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
 
     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email }; //User instance info that is safe to save to JWT
+      const { id, firstName, lastName, username, email } = this; // context will be the User instance
+      return { id, firstName, lastName, username, email }; //User instance info that is safe to save to JWT
     }
 
     validatePassword(password) { // return true if there is a match with the User instance's hashedPassword
