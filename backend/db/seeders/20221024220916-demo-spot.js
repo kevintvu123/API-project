@@ -26,6 +26,18 @@ module.exports = {
         price: 1.1
       },
       {
+        ownerId: 1,
+        address: 'address 1.2',
+        city: 'city 1.2',
+        state: 'state 1.2',
+        country: 'country 1.2',
+        lat: 1.2,
+        lng: 1.2,
+        name: 'spot 1.2',
+        description: 'desc 1.2',
+        price: 1.2
+      },
+      {
         ownerId: 2,
         address: 'address 2',
         city: 'city 2',
