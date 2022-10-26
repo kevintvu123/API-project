@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, Review, sequelize, Sequelize } = require('../../db/models');
+const { Spot, SpotImage, Review, sequelize, Sequelize } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -83,10 +83,16 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
                 [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']
             ]
         })
-        const avgRating = review[0].dataValues.avgRating //keying to grab the value
+        const avgRating = review[0].toJSON().avgRating //keying to grab the value
 
-        const spotImage = await spot.getSpotImages()
-        const url = spotImage[0].dataValues.url
+        let spotImage = await SpotImage.findOne({      //finds the first image that has a truthy preview
+            where: {
+                preview: true,
+                spotId: spot.id
+            }
+        })
+
+        spotImage ? spotImage = spotImage.url : null
 
         const spotData = {
             id: spot.id,
@@ -103,7 +109,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avgRating,
-            previewImage: url
+            previewImage: spotImage
         }
         payload.push(spotData)
 
@@ -126,11 +132,17 @@ router.get('/', async (req, res) => {
                 [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']
             ]
         })
-        const avgRating = review[0].dataValues.avgRating //keying to grab the value
 
-        const spotImage = await spot.getSpotImages()
+        const avgRating = review[0].toJSON().avgRating //keying to grab the value
 
-        const url = spotImage[0].dataValues.url
+        let spotImage = await SpotImage.findOne({      //finds the first image that has a truthy preview
+            where: {
+                preview: true,
+                spotId: spot.id
+            }
+        })
+
+        spotImage ? spotImage = spotImage.url : null
 
         const spotData = {
             id: spot.id,
@@ -147,7 +159,7 @@ router.get('/', async (req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avgRating,
-            previewImage: url
+            previewImage: spotImage
         }
         payload.push(spotData)
     }
