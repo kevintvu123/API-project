@@ -73,6 +73,7 @@ router.get('/', async (req, res) => {
         const avgRating = review[0].dataValues.avgRating //keying to grab the value
 
         const spotImage = await spot.getSpotImages()
+
         const url = spotImage[0].dataValues.url
 
         const spotData = {
