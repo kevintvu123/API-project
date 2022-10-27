@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, Review, sequelize, Sequelize } = require('../../db/models');
+const { Spot, SpotImage, Review, Booking, sequelize, Sequelize } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -52,6 +52,10 @@ const validateReviewCreate = [
     handleValidationErrors
 ];
 
+const validateBookingCreate = [
+    check()
+]
+
 const reqAuthorization = async (req, res, next) => { //middleware to authorize that spot exists and user owns spot
     const { spotId } = req.params //assumes spotId is parameter
     const { user } = req //assumes user was authenticated
@@ -70,6 +74,32 @@ const reqAuthorization = async (req, res, next) => { //middleware to authorize t
     const ownerId = findSpot.toJSON().ownerId
 
     if (ownerId === userId) {
+        return next()
+    } else {    //Error for unauthorized user
+        const err = Error("Spot couldn't be found");
+        err.status = 404
+        return next(err);
+    }
+}
+
+const reqAuthBookingNotBelong = async (req, res, next) => {
+    const { spotId } = req.params //assumes spotId is parameter
+    const { user } = req //assumes user was authenticated
+    const userId = user.toJSON().id
+
+    const findSpot = await Spot.findByPk(spotId, { //finds spot and returns the ownerId
+        attributes: ['ownerId']
+    })
+
+    if (!findSpot) {   //Error for non-existent spot
+        const err = new Error("Spot couldn't be found");
+        err.status = 404
+        return next(err);
+    }
+
+    const ownerId = findSpot.toJSON().ownerId
+
+    if (ownerId !== userId) {
         return next()
     } else {    //Error for unauthorized user
         const err = Error("Spot couldn't be found");
@@ -98,6 +128,55 @@ router.put('/:spotId', requireAuth, reqAuthorization, validateSpotCreate, async 
     await findSpot.save();
 
     res.json(findSpot)
+})
+
+router.post('/:spotId/bookings', requireAuth, reqAuthBookingNotBelong, async (req, res, next) => {
+    const { spotId } = req.params
+    const { startDate, endDate } = req.body
+    const { user } = req
+    const userId = user.id
+
+    const startDateFormatted = new Date(startDate)
+    const endDateFormatted = new Date(endDate)
+
+    if (startDateFormatted > endDateFormatted) {
+        const err = Error('Validation error')
+        err.status = 400
+        err.errors = {
+            endDate: "endDate cannot come before startDate"
+        }
+        return next(err)
+    }
+
+    const { Op } = require("sequelize")
+    const findBooking = await Booking.findOne({
+        where: {
+            [Op.or]: [
+                { startDate: startDateFormatted },
+                { endDate: endDateFormatted }
+            ]
+        }
+    })
+    if (findBooking) {
+        const err = Error("Sorry, this spot is already booked for the specified dates")
+        err.status = 403
+        err.errors = {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+        }
+        return next(err)
+    }
+
+
+    const newBooking = await Booking.create({
+        spotId: spotId,
+        userId: userId,
+        startDate: startDate,
+        endDate: endDate
+    })
+
+
+    res.json(newBooking)
 })
 
 //Create a Review for a Spot based on the Spot's id
@@ -136,6 +215,7 @@ router.post('/:spotId/reviews', requireAuth, validateReviewCreate, async (req, r
 
     res.json(newReview)
 })
+
 
 
 //Add an Image to a Spot based on Spot id
