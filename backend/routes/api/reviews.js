@@ -43,10 +43,10 @@ const reviewImageCounter = async (req, res, next) => { //middleware to count rev
         }
     })
 
-    if (countImages > 9) {
+    if (countImages >= 10) {
         const err = Error('Maximum number of images for this resource was reached')
         err.status = 403
-        next(err)
+        return next(err)
     } else {
         next()
     }
@@ -63,6 +63,21 @@ router.post('/:reviewId/images', requireAuth, reqAuthorization, reviewImageCount
     })
 
     res.json(newImage)
+})
+
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req
+    const userId = user.id
+
+    const findReviews = await Review.findAll({
+        where: {
+            userId: userId
+        }
+    })
+
+    console.log(findReviews)
+
+    res.json()
 })
 
 module.exports = router;
