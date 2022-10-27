@@ -8,6 +8,17 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+const validateReviewEdit = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 const reqAuthorization = async (req, res, next) => { //middleware to authorize that review exists and user owns review
     const { reviewId } = req.params //assumes reviewId is parameter
     const { user } = req //assumes user was authenticated
@@ -51,6 +62,21 @@ const reviewImageCounter = async (req, res, next) => { //middleware to count rev
         next()
     }
 }
+
+//Edit a Review
+router.put('/:reviewId', requireAuth, reqAuthorization, validateReviewEdit, async (req, res) => {
+    const { reviewId } = req.params
+    const { review, stars } = req.body
+
+    const findReview = await Review.findByPk(reviewId)
+    findReview.set({
+        review: review,
+        stars: stars
+    })
+    await findReview.save()
+
+    res.json(findReview)
+})
 
 //Add Image to Review 
 router.post('/:reviewId/images', requireAuth, reqAuthorization, reviewImageCounter, async (req, res, next) => {
