@@ -89,59 +89,6 @@ router.post('/:spotId/images', requireAuth, reqAuthorization, async (req, res) =
     })
 })
 
-//Get details of a Spot from id
-router.get('/:spotId', async (req, res) => {
-    const { spotId } = req.params
-
-    //Spot Info
-    const findCurrSpot = await Spot.findByPk(spotId)
-    const currSpot = findCurrSpot.toJSON()
-
-    //Reviews info
-    const totalReviews = await Review.count({
-        where: {
-            spotId: spotId
-        }
-    })
-
-    const findAvgRating = await findCurrSpot.getReviews({  //aggregate function to find average of Stars column
-        attributes: [
-            [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']
-        ]
-    })
-    const avgRating = findAvgRating[0].toJSON().avgRating
-
-
-    //Images info
-    const findAllImages = await SpotImage.findAll({
-        attributes: {
-            exclude: ['createdAt', 'updatedAt', 'spotId']
-        },
-        where: {
-            spotId: spotId
-        }
-    })
-    const imageArr = []
-    for (let i = 0; i < findAllImages.length; i++) {
-        imageArr.push(findAllImages[i].toJSON())
-    }
-
-    //Owner info
-    const findOwner = await findCurrSpot.getUser({
-        attributes: {
-            exclude: ['username']
-        }
-    })
-    const owner = findOwner.toJSON()
-
-    res.json({
-        ...currSpot,
-        numReviews: totalReviews,
-        avgStarRating: avgRating,
-        spotImages: imageArr,
-        Owner: owner
-    })
-})
 
 //Create a spot
 router.post('/', requireAuth, validateSpotCreate, async (req, res) => {
@@ -218,6 +165,60 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     }
     res.json({
         Spots: payload
+    })
+})
+
+//Get details of a Spot from id
+router.get('/:spotId', async (req, res) => {
+    const { spotId } = req.params
+
+    //Spot Info
+    const findCurrSpot = await Spot.findByPk(spotId)
+    const currSpot = findCurrSpot.toJSON()
+
+    //Reviews info
+    const totalReviews = await Review.count({
+        where: {
+            spotId: spotId
+        }
+    })
+
+    const findAvgRating = await findCurrSpot.getReviews({  //aggregate function to find average of Stars column
+        attributes: [
+            [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']
+        ]
+    })
+    const avgRating = findAvgRating[0].toJSON().avgRating
+
+
+    //Images info
+    const findAllImages = await SpotImage.findAll({
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'spotId']
+        },
+        where: {
+            spotId: spotId
+        }
+    })
+    const imageArr = []
+    for (let i = 0; i < findAllImages.length; i++) {
+        imageArr.push(findAllImages[i].toJSON())
+    }
+
+    //Owner info
+    const findOwner = await findCurrSpot.getUser({
+        attributes: {
+            exclude: ['username']
+        }
+    })
+    const owner = findOwner.toJSON()
+
+    res.json({
+        ...currSpot,
+        numReviews: totalReviews,
+        avgStarRating: avgRating,
+        spotImages: imageArr,
+        Owner: owner
     })
 })
 
