@@ -39,8 +39,8 @@ const reqAuthorization = async (req, res, next) => { //middleware to authorize t
     if (ownerId === userId) {
         return next()
     } else {    //Error for unauthorized user
-        const err = Error("Review couldn't be found");
-        err.status = 404
+        const err = Error("Forbidden");
+        err.status = 403
         return next(err);
     }
 }
@@ -62,6 +62,19 @@ const reviewImageCounter = async (req, res, next) => { //middleware to count rev
         next()
     }
 }
+
+//Delete a Review
+router.delete('/:reviewId', requireAuth, reqAuthorization, async (req, res, next) => {
+    const { reviewId } = req.params
+
+    const findReview = await Review.findByPk(reviewId)
+    await findReview.destroy()
+
+    res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 //Edit a Review
 router.put('/:reviewId', requireAuth, reqAuthorization, validateReviewEdit, async (req, res) => {
@@ -96,6 +109,7 @@ router.post('/:reviewId/images', requireAuth, reqAuthorization, reviewImageCount
     })
 })
 
+//Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req
     const userId = user.id
@@ -121,6 +135,15 @@ router.get('/current', requireAuth, async (req, res) => {
                 exclude: ['createdAt', 'updatedAt']
             }
         })
+
+        let spotImage = await SpotImage.findOne({      //finds the first image that has a truthy preview
+            where: {
+                preview: true,
+                spotId: spot.id
+            }
+        })
+        spotImage ? spotImage = spotImage.url : null
+        spot.dataValues.previewImage = spotImage
 
         const reviewImages = await review.getReviewImages({
             attributes: {

@@ -6,9 +6,44 @@ const { Spot, SpotImage, Review, Booking, ReviewImage } = require('../../db/mode
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { application } = require('express');
-const e = require('express');
 
 const router = express.Router();
+
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const { user } = req
+    const { bookingId } = req.params
+
+    const findBooking = await Booking.findByPk(bookingId, {
+        attributes: {
+            include: ['userId']
+        }
+    })
+
+    if (!findBooking) { //checks if the booking exist 
+        const err = Error("Booking couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+    if (findBooking.userId !== user.id) {   //authorizes user
+        const err = Error("Forbidden")
+        err.status = 403
+        return next(err)
+    }
+
+    if (findBooking.startDate < new Date) {
+        const err = Error("Bookings that have been started can't be deleted")
+        err.status = 403
+        return next(err)
+    }
+
+    await findBooking.destroy()
+
+    res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req
