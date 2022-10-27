@@ -67,6 +67,27 @@ const reqAuthorization = async (req, res, next) => { //middleware to authorize t
     }
 }
 
+//Edit a Spot
+router.put('/:spotId', requireAuth, reqAuthorization, validateSpotCreate, async (req, res) => {
+    const { spotId } = req.params
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const findSpot = await Spot.findByPk(spotId)
+    findSpot.set({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price
+    })
+    await findSpot.save();
+
+    res.json(findSpot)
+})
 
 
 //Add an Image to a Spot based on Spot id
