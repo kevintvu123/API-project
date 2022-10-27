@@ -52,10 +52,6 @@ const validateReviewCreate = [
     handleValidationErrors
 ];
 
-const validateBookingCreate = [
-    check()
-]
-
 const reqAuthorization = async (req, res, next) => { //middleware to authorize that spot exists and user owns spot
     const { spotId } = req.params //assumes spotId is parameter
     const { user } = req //assumes user was authenticated
@@ -76,8 +72,8 @@ const reqAuthorization = async (req, res, next) => { //middleware to authorize t
     if (ownerId === userId) {
         return next()
     } else {    //Error for unauthorized user
-        const err = Error("Spot couldn't be found");
-        err.status = 404
+        const err = Error("Forbidden");
+        err.status = 403
         return next(err);
     }
 }
@@ -107,6 +103,19 @@ const reqAuthBookingNotBelong = async (req, res, next) => {
         return next(err);
     }
 }
+
+//Delete a Spot
+router.delete('/:spotId', requireAuth, reqAuthorization, async (req, res, next) => {
+    const { spotId } = req.params
+
+    const findSpot = await Spot.findByPk(spotId)
+    await findSpot.destroy()
+
+    res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 //Edit a Spot
 router.put('/:spotId', requireAuth, reqAuthorization, validateSpotCreate, async (req, res) => {
