@@ -148,7 +148,7 @@ router.post('/:spotId/bookings', requireAuth, reqAuthBookingNotBelong, async (re
         return next(err)
     }
 
-    const { Op } = require("sequelize")
+    const { Op, json } = require("sequelize")
     const findBooking = await Booking.findOne({
         where: {
             [Op.or]: [
@@ -316,6 +316,72 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     res.json({
         Spots: payload
     })
+})
+
+
+//Get all Bookings by a Spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const { spotId } = req.params
+    const { user } = req
+    const userId = user.id
+
+    const findBookings = await Booking.findAll({
+        where: {
+            spotId: spotId
+        }
+    })
+
+    const payloadOwner = []
+    const payloadNotOwner = []
+
+    for (let i = 0; i < findBookings.length; i++) {
+        const booking = findBookings[i]
+
+        const user = await booking.getUser({
+            attributes: {
+                exclude: ['username']
+            }
+        })
+
+        const bookingDataOwner = {
+            User: user,
+            id: booking.id,
+            spotId: booking.spotId,
+            userId: booking.userId,
+            startDate: booking.startDate,
+            endDate: booking.endDate,
+            createdAt: booking.createdAt,
+            updatedAt: booking.updatedAt
+        }
+        payloadOwner.push(bookingDataOwner)
+
+        const bookingDataNotOwner = {
+            spotId: booking.spotId,
+            startDate: booking.startDate,
+            endDate: booking.endDate
+        }
+        payloadNotOwner.push(bookingDataNotOwner)
+    }
+
+    const findSpot = await Spot.findByPk(spotId, {
+        attributes: {
+            include: ['ownerId']
+        }
+    })
+
+    if (!findSpot) {
+        const err = Error("Spot couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+    const ownerId = findSpot.toJSON().ownerId
+    console.log(ownerId, userId)
+    if (ownerId !== userId) {
+        res.json(payloadNotOwner)
+    } else {
+        res.json(payloadOwner)
+    }
 })
 
 //Get all Reviews by a Spot's id
