@@ -41,6 +41,54 @@ const validateSpotCreate = [
     handleValidationErrors
 ];
 
+const reqAuthorization = async (req, res, next) => { //middleware to authorize that spot exists and user owns spot
+    const { spotId } = req.params //assumes spotId is parameter
+    const { user } = req //assumes user was authenticated
+    const userId = user.toJSON().id
+
+    const findSpot = await Spot.findByPk(spotId, { //finds spot and returns the ownerId
+        attributes: ['ownerId']
+    })
+
+    if (!findSpot) {   //Error for non-existent spot
+        const err = new Error("Spot couldn't be found");
+        err.status = 404
+        return next(err);
+    }
+
+    const ownerId = findSpot.toJSON().ownerId
+
+    if (ownerId === userId) {
+        return next()
+    } else {    //Error for unauthorized user
+        const err = new Error("Spot couldn't be found");
+        err.status = 404
+        return next(err);
+    }
+}
+
+
+
+//Add an Image to a Spot based on Spot id
+router.post('/:spotId/images', requireAuth, reqAuthorization, async (req, res) => {
+    const { spotId } = req.params
+    const { url, preview } = req.body
+
+    const newSpotImage = await SpotImage.create({
+        spotId: spotId,
+        url: url,
+        preview: preview
+    })
+
+    const newSpotImageDetails = newSpotImage.toJSON()
+
+    res.json({
+        id: newSpotImageDetails.id,
+        url: newSpotImageDetails.url,
+        preview: newSpotImageDetails.preview
+    })
+})
+
 //Create a spot
 router.post('/', requireAuth, validateSpotCreate, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
