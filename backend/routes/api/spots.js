@@ -188,9 +188,10 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
     const allSpotsByUser = await Spot.findAll({
         where: {
-            ownerId: user.dataValues.id //grabbing Users id from the authentication middleware in req
+            ownerId: user.id //grabbing Users id from the authentication middleware in req
         }
     })
+
 
     const payload = [];
     for (let i = 0; i < allSpotsByUser.length; i++) {

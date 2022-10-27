@@ -62,7 +62,12 @@ router.post('/:reviewId/images', requireAuth, reqAuthorization, reviewImageCount
         url: url
     })
 
-    res.json(newImage)
+    const newImageDetails = newImage.toJSON()
+
+    res.json({
+        id: newImageDetails.id,
+        url: url
+    })
 })
 
 router.get('/current', requireAuth, async (req, res) => {
@@ -75,9 +80,47 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(findReviews)
+    const payload = []
+    for (let i = 0; i < findReviews.length; i++) {
+        const review = findReviews[i]
 
-    res.json()
+        const user = await review.getUser({
+            attributes: {
+                exclude: ['username']
+            }
+        })
+
+        const spot = await review.getSpot({
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        })
+
+        const reviewImages = await review.getReviewImages({
+            attributes: {
+                exclude: ['createdAt', 'updatedAt', 'reviewId']
+            }
+        })
+
+        const reviewData = {
+            id: review.id,
+            userId: review.userId,
+            spotId: review.spotId,
+            review: review.review,
+            review: review.stars,
+            review: review.createdAt,
+            review: review.updatedAt,
+            User: user,
+            Spot: spot,
+            ReviewImages: reviewImages
+        }
+        payload.push(reviewData)
+
+    }
+
+    res.json({
+        Reviews: payload
+    })
 })
 
 module.exports = router;
