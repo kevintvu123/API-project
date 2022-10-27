@@ -60,6 +60,18 @@ module.exports = {
         name: 'spot 3',
         description: 'desc 3',
         price: 3.3
+      },
+      {
+        ownerId: 4,
+        address: 'address 4',
+        city: 'city 4',
+        state: 'state 4',
+        country: 'country 4',
+        lat: 4.4,
+        lng: 4.4,
+        name: 'spot 4',
+        description: 'desc 4',
+        price: 4.4
       }
     ])
   },
@@ -73,7 +85,7 @@ module.exports = {
      */
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Spots', {
-      name: { [Op.in]: ['spot 1', 'spot 2', 'spot 3'] }
+      name: { [Op.in]: ['spot 1', 'spot 1.2', 'spot 2', 'spot 3', 'spot 4'] }
     }, {});
   }
 };

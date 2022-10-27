@@ -16,31 +16,31 @@ module.exports = {
       {
         spotId: 1,
         userId: 1,
-        review: 'review 1',
+        review: 'review for spot 1',
         stars: 1
       },
       {
         spotId: 1,
-        userId: 1,
-        review: 'review 1',
+        userId: 2,
+        review: 'review for spot 1',
         stars: 2
       },
       {
         spotId: 2,
         userId: 2,
-        review: 'review 2',
+        review: 'review for spot 2',
         stars: 2
       },
       {
         spotId: 3,
         userId: 3,
-        review: 'review 3',
+        review: 'review for spot 3',
         stars: 3
       },
       {
         spotId: 3,
-        userId: 3,
-        review: 'review 3',
+        userId: 4,
+        review: 'review for spot 3',
         stars: 4
       }
     ])
@@ -55,7 +55,7 @@ module.exports = {
      */
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Reviews', {
-      review: { [Op.in]: ['review 1', 'review 2', 'review 3'] }
+      review: { [Op.in]: ['review for spot 1', 'review for spot 2', 'review for spot 3'] }
     }, {});
   }
 };
