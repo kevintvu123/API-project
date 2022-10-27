@@ -41,6 +41,17 @@ const validateSpotCreate = [
     handleValidationErrors
 ];
 
+const validateReviewCreate = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 const reqAuthorization = async (req, res, next) => { //middleware to authorize that spot exists and user owns spot
     const { spotId } = req.params //assumes spotId is parameter
     const { user } = req //assumes user was authenticated
@@ -61,7 +72,7 @@ const reqAuthorization = async (req, res, next) => { //middleware to authorize t
     if (ownerId === userId) {
         return next()
     } else {    //Error for unauthorized user
-        const err = new Error("Spot couldn't be found");
+        const err = Error("Spot couldn't be found");
         err.status = 404
         return next(err);
     }
@@ -87,6 +98,42 @@ router.put('/:spotId', requireAuth, reqAuthorization, validateSpotCreate, async 
     await findSpot.save();
 
     res.json(findSpot)
+})
+
+//Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, validateReviewCreate, async (req, res, next) => {
+    const { spotId } = req.params;
+    const { review, stars } = req.body
+    const { user } = req;
+    const userId = user.id
+
+    //Error for non-existent spot
+    const findSpot = await Spot.findByPk(spotId)
+    if (!findSpot) {
+        const err = Error("Spot couldn't be found")
+        err.status = 404
+        next(err)
+    }
+    //Error for duplicate review
+    const findReviewByOwner = await findSpot.getReviews({
+        where: {
+            userId: userId
+        }
+    })
+    if (findReviewByOwner.length) {
+        const err = Error('User already has a review for this spot')
+        err.status = 403
+        next(err)
+    }
+
+    const newReview = await Review.create({
+        spotId: spotId,
+        userId: userId,
+        review: review,
+        stars: stars
+    })
+
+    res.json(newReview)
 })
 
 
