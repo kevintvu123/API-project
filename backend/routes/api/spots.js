@@ -169,11 +169,16 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 })
 
 //Get details of a Spot from id
-router.get('/:spotId', async (req, res) => {
+router.get('/:spotId', async (req, res, next) => {
     const { spotId } = req.params
 
     //Spot Info
     const findCurrSpot = await Spot.findByPk(spotId)
+    if (!findCurrSpot) {    //Couldn't find spot w/ specified id
+        const err = new Error("Spot couldn't be found")
+        err.status = 404
+        next(err)
+    }
     const currSpot = findCurrSpot.toJSON()
 
     //Reviews info
