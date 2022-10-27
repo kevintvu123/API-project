@@ -276,9 +276,9 @@ router.get('/:spotId/reviews', async (req, res, next) => {
             userId: review.userId,
             spotId: review.spotId,
             review: review.review,
-            review: review.stars,
-            review: review.createdAt,
-            review: review.updatedAt,
+            stars: review.stars,
+            createdAt: review.createdAt,
+            updatedAt: review.updatedAt,
             User: user,
             ReviewImages: reviewImages
 
