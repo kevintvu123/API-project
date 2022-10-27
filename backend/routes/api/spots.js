@@ -120,10 +120,11 @@ router.post('/:spotId/reviews', requireAuth, validateReviewCreate, async (req, r
             userId: userId
         }
     })
+
     if (findReviewByOwner.length) {
         const err = Error('User already has a review for this spot')
         err.status = 403
-        next(err)
+        return next(err)
     }
 
     const newReview = await Review.create({
