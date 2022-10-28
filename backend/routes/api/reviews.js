@@ -132,7 +132,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
         const spot = await review.getSpot({
             attributes: {
-                exclude: ['createdAt', 'updatedAt']
+                exclude: ['createdAt', 'updatedAt', 'description']
             }
         })
 

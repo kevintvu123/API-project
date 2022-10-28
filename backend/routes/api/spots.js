@@ -385,11 +385,11 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 
     const ownerId = findSpot.toJSON().ownerId
-    console.log(ownerId, userId)
+
     if (ownerId !== userId) {
-        res.json(payloadNotOwner)
+        res.json({ Bookings: payloadNotOwner })
     } else {
-        res.json(payloadOwner)
+        res.json({ Bookings: payloadOwner })
     }
 })
 
@@ -500,7 +500,7 @@ router.get('/:spotId', async (req, res, next) => {
         ...currSpot,
         numReviews: totalReviews,
         avgStarRating: avgRating,
-        spotImages: imageArr,
+        SpotImages: imageArr,
         Owner: owner
     })
 })
