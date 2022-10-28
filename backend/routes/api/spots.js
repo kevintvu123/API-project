@@ -6,6 +6,8 @@ const { Spot, SpotImage, Review, Booking, sequelize, Sequelize } = require('../.
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const { Op, json } = require("sequelize")
+
 const router = express.Router();
 
 const validateSpotCreate = [
@@ -506,8 +508,112 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 //Get All Spots
-router.get('/', async (req, res) => {
-    const allSpots = await Spot.findAll()
+router.get('/', async (req, res, next) => {
+    //Add Query Filters
+    let query = {
+        where: {},
+        include: []
+    };
+
+    //Validating Errors
+    let errors = {} //Object that holds possible parameter errors
+    if (req.query.page) {
+        if (parseInt(req.query.page) < 1) {
+            errors.page = "Page must be greater than or equal to 1"
+        }
+        if (parseInt(req.query.page) > 10) {
+            req.query.page = 10
+        }
+    }
+
+
+    if (req.query.size) {
+        if (parseInt(req.query.size) < 1) {
+            errors.size = "Size must be greater than or equal to 1"
+        }
+        if (parseInt(req.query.size) > 20) {
+            req.query.size = 20
+        }
+    }
+
+
+    if (req.query.maxLat) {
+        if (isNaN(parseInt(req.query.maxLat))) {
+            errors.maxLat = "Maximum latitude is invalid"
+        } else {
+            query.where.lat = {
+                [Op.lte]: req.query.maxLat
+            }
+        }
+    }
+
+    if (req.query.minLat) {
+        if (isNaN(parseInt(req.query.minLat))) {
+            errors.minLat = "Minimum latitude is invalid"
+        } else {
+            query.where.lat = {
+                [Op.gte]: req.query.minLat
+            }
+        }
+    }
+
+    if (req.query.maxLng) {
+        if (isNaN(parseInt(req.query.maxLng))) {
+            errors.maxLng = "Maximum longitude is invalid"
+        } else {
+            query.where.lng = {
+                [Op.lte]: req.query.maxLng
+            }
+        }
+    }
+
+    if (req.query.minLng) {
+        if (isNaN(parseInt(req.query.minLng))) {
+            errors.minLng = "Minimum longitude is invalid"
+        } else {
+            query.where.lng = {
+                [Op.gte]: req.query.minLng
+            }
+        }
+    }
+
+    if (req.query.maxPrice) {
+        if (isNaN(parseInt(req.query.maxPrice)) || parseInt(req.query.maxPrice) < 0) {
+            errors.maxPrice = "Maximum price must be greater than or equal to 0"
+        } else {
+            query.where.price = {
+                [Op.lte]: req.query.maxPrice
+            }
+        }
+    }
+
+    if (req.query.minPrice) {
+        if (isNaN(parseInt(req.query.minPrice)) || parseInt(req.query.minPrice) < 0) {
+            errors.minPrice = "Minimum price must be greater than or equal to 0"
+        } else {
+            query.where.price = {
+                [Op.gte]: req.query.minPrice
+            }
+        }
+    }
+
+    //If any error keys were created, return Error
+    if (Object.keys(errors).length !== 0) {
+        const err = new Error("Validation Error")
+        err.status = 400
+        err.errors = errors
+        return next(err)
+    }
+
+    //Setting up Limit and Offset Calculations
+    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    const size = req.query.size === undefined ? 20 : parseInt(req.query.size);
+    if (page >= 1 && size >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1);
+    }
+
+    const allSpots = await Spot.findAll(query) //Apply Query to search
 
     const payload = [];
     for (let i = 0; i < allSpots.length; i++) { //lazy loading to avoid conflicts w/ Postgres
@@ -550,7 +656,9 @@ router.get('/', async (req, res) => {
         payload.push(spotData)
     }
     res.json({
-        Spots: payload
+        Spots: payload,
+        page: page,
+        size: size
     })
 })
 
