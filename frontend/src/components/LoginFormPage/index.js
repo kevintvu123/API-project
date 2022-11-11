@@ -10,7 +10,7 @@ function LoginFormPage() { //AuthMe Phase 1:
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
-
+    
     if (sessionUser) return (
         <Redirect to="/" />
     );

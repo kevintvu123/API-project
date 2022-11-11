@@ -54,7 +54,7 @@ router.delete('/', (_req, res) => {
 );
 
 // Restore session user
-router.get('/', restoreUser, requireAuth, (req, res) => {
+router.get('/', (req, res) => {
     const { user } = req;
     if (user) {
         return res.json({
@@ -64,7 +64,7 @@ router.get('/', restoreUser, requireAuth, (req, res) => {
             email: user.email,
             username: user.username
         });
-    } else return res.json({});
+    } else return res.json(null);
 }
 );
 
