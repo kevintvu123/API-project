@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import Navigation from "./components/Navigation";
+import AllSpots from "./components/Spots/AllSpots/AllSpots";
 
 import * as sessionActions from "./store/session";
 
@@ -17,6 +18,7 @@ function App() {
   return isLoaded && (
     <>
       <Navigation isLoaded={isLoaded} />
+      <AllSpots />
     </>
   );
 }
