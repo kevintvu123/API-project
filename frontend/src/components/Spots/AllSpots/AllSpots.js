@@ -15,8 +15,8 @@ const AllSpots = () => {
     }, [dispatch])
 
     const allSpots = useSelector(state => state.spot.allSpots)
+    
     if (!allSpots) return null
-
 
     const allSpotsArr = Object.values(allSpots)
 
@@ -32,8 +32,14 @@ const AllSpots = () => {
                     {
                         allSpotsArr.map((spot) => {
                             return (
-                                <div className= 'spot-card' key={spot.id}>
-                                    <div onClick={() => handleClick(spot.id)}><h1>{spot.name}</h1>Spot Id: {spot.id},{spot.address}, {spot.description}, {spot.price} </div>
+                                <div className='spot-card' key={spot.id}>
+                                    <div onClick={() => handleClick(spot.id)}>
+                                        <h1>{spot.name}</h1>
+                                        <div>Spot Id: {spot.id}</div>
+                                        <div>Address: {spot.address}</div>
+                                        <div>{spot.description}</div>
+                                        <div>Price: {spot.price}</div>
+                                    </div>
                                 </div>
                             )
                         })
