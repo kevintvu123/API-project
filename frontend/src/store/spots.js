@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 //types
 const GET_ALL_SPOTS = 'spots/getAllSpots'
+const GET_SPOT_DETAILS = '/spots/getSpotDetails'
 const GET_USER_SPOTS = 'spots/getUserSpots'
 const CREATE_SPOT = 'spots/createSpot'
 
@@ -10,6 +11,13 @@ const getAllSpots = (allSpots) => {
     return {
         type: GET_ALL_SPOTS,
         payload: allSpots
+    }
+}
+
+const getSpotDetails = (spotDetails) => {
+    return {
+        type: GET_SPOT_DETAILS,
+        payload: spotDetails
     }
 }
 
@@ -34,6 +42,15 @@ export const getAllSpotsThunk = () => async dispatch => {
     if (response.ok) {
         const allSpots = await response.json();
         dispatch(getAllSpots(allSpots));
+        return response;
+    }
+}
+
+export const getSpotDetailsThunk = (spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`);
+    if (response.ok) {
+        const spotDetails = await response.json();
+        dispatch(getSpotDetails(spotDetails));
         return response;
     }
 }
@@ -97,12 +114,15 @@ const spotsReducer = (state = initialState, action) => {
             allSpotsArr.forEach(spot => allSpots[spot.id] = spot)
             newState['allSpots'] = { ...allSpots }
             return newState
-        case CREATE_SPOT:
-            const createdSpot = action.payload
-            newState.allSpots[createdSpot.id] = createdSpot
+        case GET_SPOT_DETAILS:
+            newState['spotDetails'] = action.payload
             return newState
         case GET_USER_SPOTS:
             newState['userSpots'] = action.payload
+            return newState
+        case CREATE_SPOT:
+            const createdSpot = action.payload
+            newState.allSpots[createdSpot.id] = createdSpot
             return newState
         default:
             return state;

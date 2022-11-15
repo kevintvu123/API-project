@@ -8,6 +8,7 @@ import AllSpots from "./components/Spots/AllSpots/AllSpots";
 
 import * as sessionActions from "./store/session";
 import SpotDetails from "./components/Spots/SpotDetails/SpotDetails";
+import UserSpots from "./components/Spots/UserSpots/UserSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <AllSpots />
+        </Route>
+        <Route exact path='/spots/current'>
+          <UserSpots />
         </Route>
         <Route exact path='/spots/:spotId'>
           <SpotDetails />
