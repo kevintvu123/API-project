@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../../store/spots";
 import './UserSpots.css'
+import EditSpotFormModal from "../../EditSpotModal";
 
 const UserSpots = () => {
     const dispatch = useDispatch()
@@ -51,6 +52,7 @@ const UserSpots = () => {
                                     <div>{spot.description}</div>
                                     <div>Price: {spot.price}</div>
                                 </div>
+                                <EditSpotFormModal spot={spot}/>
                             </div>
                         )
                     })

@@ -5,6 +5,7 @@ const GET_ALL_SPOTS = 'spots/getAllSpots'
 const GET_SPOT_DETAILS = '/spots/getSpotDetails'
 const GET_USER_SPOTS = 'spots/getUserSpots'
 const CREATE_SPOT = 'spots/createSpot'
+const EDIT_SPOT = 'spots/editSpot'
 
 //action creators
 const getAllSpots = (allSpots) => {
@@ -32,6 +33,13 @@ const createSpot = (createdSpot) => {
     return {
         type: CREATE_SPOT,
         payload: createdSpot
+    }
+}
+
+const editSpot = (editedSpot) => {
+    return {
+        type: EDIT_SPOT,
+        payload: editedSpot
     }
 }
 
@@ -63,6 +71,7 @@ export const getUserSpotsThunk = () => async dispatch => {
         dispatch(getUserSpots(userSpots));
         return response;
     }
+    return response
 }
 
 export const createSpotThunk = (spot) => async dispatch => {
@@ -102,6 +111,20 @@ export const createSpotThunk = (spot) => async dispatch => {
     return response
 }
 
+export const editSpotThunk = (editedSpot, spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        body: JSON.stringify(editedSpot)
+    })
+
+    if (response.ok) {
+        const editedSpot = response.json()
+        dispatch(editSpot(editedSpot))
+        return editedSpot
+    }
+    return response
+}
+
 
 const initialState = {}
 
@@ -122,8 +145,10 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case CREATE_SPOT:
             const createdSpot = action.payload
-            newState.allSpots[createdSpot.id] = createdSpot
-            return newState
+            return createdSpot
+        case EDIT_SPOT:
+            const editedSpot = action.payload
+            return editedSpot
         default:
             return state;
     }
