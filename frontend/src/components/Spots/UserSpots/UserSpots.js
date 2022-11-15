@@ -1,9 +1,11 @@
 import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../../store/spots";
 import './UserSpots.css'
 import EditSpotFormModal from "../../EditSpotModal";
+import { deleteSpotThunk } from "../../../store/spots";
 
 const UserSpots = () => {
     const dispatch = useDispatch()
@@ -14,6 +16,7 @@ const UserSpots = () => {
     useEffect(() => {
         dispatch(getUserSpotsThunk())
     }, [dispatch])
+
 
     const userSpots = useSelector(state => state.spot.userSpots)
 
@@ -52,7 +55,13 @@ const UserSpots = () => {
                                     <div>{spot.description}</div>
                                     <div>Price: {spot.price}</div>
                                 </div>
-                                <EditSpotFormModal spot={spot}/>
+                                <EditSpotFormModal spot={spot} />
+                                <button onClick={() => {
+                                    dispatch(deleteSpotThunk(spot.id))
+                                    history.push('/')
+                                }}>
+                                    Delete Spot
+                                </button>
                             </div>
                         )
                     })
