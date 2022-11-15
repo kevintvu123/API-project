@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 //types
 const GET_ALL_SPOTS = 'spots/getAllSpots'
+const GET_USER_SPOTS = 'spots/getUserSpots'
 const CREATE_SPOT = 'spots/createSpot'
 
 //action creators
@@ -9,6 +10,13 @@ const getAllSpots = (allSpots) => {
     return {
         type: GET_ALL_SPOTS,
         payload: allSpots
+    }
+}
+
+const getUserSpots = (userSpots) => {
+    return {
+        type: GET_USER_SPOTS,
+        payload: userSpots
     }
 }
 
@@ -26,6 +34,16 @@ export const getAllSpotsThunk = () => async dispatch => {
     if (response.ok) {
         const allSpots = await response.json();
         dispatch(getAllSpots(allSpots));
+        return response;
+    }
+}
+
+export const getUserSpotsThunk = () => async dispatch => {
+    const response = await csrfFetch('/api/spots/current')
+
+    if (response.ok) {
+        const userSpots = await response.json()
+        dispatch(getUserSpots(userSpots));
         return response;
     }
 }
@@ -82,6 +100,9 @@ const spotsReducer = (state = initialState, action) => {
         case CREATE_SPOT:
             const createdSpot = action.payload
             newState.allSpots[createdSpot.id] = createdSpot
+            return newState
+        case GET_USER_SPOTS:
+            newState['userSpots'] = action.payload
             return newState
         default:
             return state;
