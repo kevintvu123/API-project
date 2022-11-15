@@ -15,7 +15,7 @@ const AllSpots = () => {
     }, [dispatch])
 
     const allSpots = useSelector(state => state.spot.allSpots)
-    
+
     if (!allSpots) return null
 
     const allSpotsArr = Object.values(allSpots)
@@ -27,25 +27,22 @@ const AllSpots = () => {
 
     return (
         <>
-            <section>
-                <ul>
+            <div className="allSpotsDiv">
+                <ul className="allSpotsContainer">
                     {
                         allSpotsArr.map((spot) => {
                             return (
-                                <div className='spot-card' key={spot.id}>
-                                    <div onClick={() => handleClick(spot.id)}>
-                                        <h1>{spot.name}</h1>
-                                        <div>Spot Id: {spot.id}</div>
-                                        <div>Address: {spot.address}</div>
-                                        <div>{spot.description}</div>
-                                        <div>Price: {spot.price}</div>
-                                    </div>
+                                <div className='spot-card' key={spot.id} onClick={() => handleClick(spot.id)}>
+                                    <div className="imageDiv"><img className="spotImage" src={spot.previewImage} alt={`SpotImage ${spot.name}`} /></div>
+                                    <div>{spot.city}, {spot.state}</div>
+                                    <div>★ {spot.avgRating}</div>
+                                    <div>${spot.price} night</div>
                                 </div>
                             )
                         })
                     }
                 </ul>
-            </section>
+            </div>
         </>
     )
 }

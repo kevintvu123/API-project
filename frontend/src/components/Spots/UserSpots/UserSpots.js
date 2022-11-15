@@ -12,20 +12,20 @@ const UserSpots = () => {
     const history = useHistory()
 
     const sessionUser = useSelector(state => state.session.user);
-
+    
     useEffect(() => {
         dispatch(getUserSpotsThunk())
     }, [dispatch])
-
-
+    
+    
     const userSpots = useSelector(state => state.spot.userSpots)
 
+    if (!sessionUser) return <Redirect to="/" />;
+    
     if (!userSpots) return null
 
     const userSpotsArr = userSpots.Spots
 
-
-    if (!sessionUser) return <Redirect to="/" />;
 
 
     const capitalize = (name) => {
