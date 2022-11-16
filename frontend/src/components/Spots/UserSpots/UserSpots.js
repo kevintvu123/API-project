@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../../store/spots";
 import './UserSpots.css'
-import EditSpotFormModal from "../../EditSpotModal";
+import EditSpotFormModal from "../EditSpotModal";
 import { deleteSpotThunk } from "../../../store/spots";
 
 const UserSpots = () => {
