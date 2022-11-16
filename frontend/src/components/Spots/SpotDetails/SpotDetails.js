@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpotDetailsThunk } from "../../../store/spots";
+import AllReviews from "../../Reviews/AllReviews";
 import './SpotDetails.css'
 
 const SpotDetails = () => {
@@ -38,6 +39,7 @@ const SpotDetails = () => {
                     </li>
                 </ul>
             </div>
+            <AllReviews />
         </>
     )
 
