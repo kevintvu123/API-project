@@ -16,62 +16,62 @@ module.exports = {
       {
         ownerId: 1,
         address: 'address 1',
-        city: 'city 1',
-        state: 'state 1',
-        country: 'country 1',
+        city: 'Manhattan',
+        state: 'New York',
+        country: 'USA',
         lat: 1.1,
         lng: 1.1,
-        name: 'spot 1',
+        name: 'Loft in Downtown Manhattan',
         description: 'desc 1',
-        price: 1.1
+        price: 489
       },
       {
         ownerId: 1,
         address: 'address 1.2',
-        city: 'city 1.2',
-        state: 'state 1.2',
-        country: 'country 1.2',
+        city: 'Midtown Manhattan',
+        state: 'New York',
+        country: 'USA',
         lat: 1.2,
         lng: 1.2,
-        name: 'spot 1.2',
+        name: 'Luxury Apartment',
         description: 'desc 1.2',
-        price: 1.2
+        price: 586
       },
       {
         ownerId: 2,
         address: 'address 2',
-        city: 'city 2',
-        state: 'state 2',
-        country: 'country 2',
+        city: 'Downtown Manhattan',
+        state: 'New York',
+        country: 'USA',
         lat: 2.2,
         lng: 2.2,
-        name: 'spot 2',
+        name: 'Luxury Apartment',
         description: 'desc 2',
-        price: 2.2
+        price: 898
       },
       {
         ownerId: 3,
         address: 'address 3',
-        city: 'city 3',
-        state: 'state 3',
-        country: 'country 3',
+        city: 'Soho',
+        state: 'New York',
+        country: 'USA',
         lat: 3.3,
         lng: 3.3,
-        name: 'spot 3',
+        name: 'Hotel Room',
         description: 'desc 3',
-        price: 3.3
+        price: 650
       },
       {
         ownerId: 4,
         address: 'address 4',
-        city: 'city 4',
-        state: 'state 4',
-        country: 'country 4',
+        city: 'Soho',
+        state: 'New York',
+        country: 'USA',
         lat: 4.4,
         lng: 4.4,
-        name: 'spot 4',
+        name: 'Condo in Soho',
         description: 'desc 4',
-        price: 4.4
+        price: 1170
       }
     ])
   },

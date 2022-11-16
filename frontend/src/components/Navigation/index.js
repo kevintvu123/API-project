@@ -8,23 +8,33 @@ import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupForm from '../SignupFormModal/SignupForm';
 
+import AirbnbLogo from "../../resources/images/airbnb-logo.png"
+
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const [showModal, setShowModal] = useState(false)
   const [login, setLogin] = useState(true)
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <ul className='navBar'>
+      <li className='navListItem'>
+        <div>
+        <NavLink className='HomeButton' exact to="/"><img className='airbnbLogo' src={AirbnbLogo} alt='Logo' /></NavLink>
+        </div>
+        <div className='profilehostDiv'>
+          <div className='profileButtonDiv'>
         {isLoaded && (
-          <ProfileButton
+          <ProfileButton 
             user={sessionUser}
             setLogin={setLogin}
             setShowModal={setShowModal} />
         )}
+          </div>
+          <div>
         {sessionUser && <CreateSpotFormModal />}
-      </li>
+          </div>
+        </div>
+      </li >
       {showModal && (
         <Modal onClose={() => { setShowModal(false) }}>
           {login ? <LoginForm setShowModal={setShowModal} /> : <SignupForm setShowModal={setShowModal} />}

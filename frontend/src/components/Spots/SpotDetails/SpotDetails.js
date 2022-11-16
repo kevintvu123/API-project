@@ -2,7 +2,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAllSpotsThunk } from "../../../store/spots";
+import { getSpotDetailsThunk } from "../../../store/spots";
+import AllReviews from "../../Reviews/AllReviews";
 import './SpotDetails.css'
 
 const SpotDetails = () => {
@@ -10,36 +11,35 @@ const SpotDetails = () => {
     const { spotId } = useParams()
 
     useEffect(() => {
-        dispatch(getAllSpotsThunk())
-    }, [dispatch])
+        dispatch(getSpotDetailsThunk(spotId))
+    }, [dispatch, spotId])
 
-    const spot = useSelector(state => state.spot.allSpots)
+    const spot = useSelector(state => state.spot.spotDetails)
 
     if (!spot) return null
-
-    const spotbyId = spot[spotId]
 
     return (
         <>
             <h1>
-                This is the details for SpotId: {spotbyId.id}
+                This is the details for SpotId: {spot.id}
             </h1>
             <div>
                 <ul>
                     <li>
-                        OwnerId: {spotbyId.ownerId}
+                        OwnerId: {spot.Owner.id}
                     </li>
                     <li>
-                        Address: {spotbyId.address}
+                        Address: {spot.address}
                     </li>
                     <li>
-                        Average Rating: {spotbyId.avgRating}
+                        Average Rating: {spot.avgStarRating}
                     </li>
                     <li>
-                        Price: ${spotbyId.price}
+                        Price: ${spot.price}
                     </li>
                 </ul>
             </div>
+            <AllReviews />
         </>
     )
 
