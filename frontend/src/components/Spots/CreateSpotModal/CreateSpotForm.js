@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { createSpotThunk } from "../../store/spots";
+import { createSpotThunk } from "../../../store/spots";
 import './CreateSpotForm.css'
 
 function CreateSpotForm({ setShowModal }) {
