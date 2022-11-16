@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpotDetailsThunk } from "../../../store/spots";
-import AllReviews from "../../Reviews/AllReviews";
+import AllReviews from "../../Reviews/AllReviews/AllReviews";
 import './SpotDetails.css'
 
 const SpotDetails = () => {
