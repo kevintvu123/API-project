@@ -15,6 +15,7 @@ const UserReviews = () => {
 
     useEffect(() => {
         dispatch(getUserReviewsThunk())
+        setHasSubmitted(false)
     }, [dispatch, hasSubmitted])
 
     const userReviews = useSelector(state => state.review.userReviews)

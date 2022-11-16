@@ -16,6 +16,7 @@ const UserSpots = () => {
 
     useEffect(() => {
         dispatch(getUserSpotsThunk())
+        setHasSubmitted(false)
     }, [dispatch, hasSubmitted])
 
 

@@ -1,22 +1,7 @@
 
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { getSpotReviewsThunk } from '../../../store/reviews'
 import './AllReviews.css'
 
-const AllReviews = () => {
-
-    const dispatch = useDispatch()
-    const { spotId } = useParams()
-
-    useEffect(() => {
-        dispatch(getSpotReviewsThunk(spotId))
-    }, [dispatch, spotId])
-
-    const allReviews = useSelector(state => state.review.allReviews)
-
-    if (!allReviews) return null
+const AllReviews = ({ allReviews }) => {
 
     const allReviewsArr = Object.values(allReviews)
 
@@ -30,7 +15,6 @@ const AllReviews = () => {
                     {allReviewsArr.map((review) => {
                         return (
                             <div key={review.id}>
-                                <div></div>
                                 <div>{review.review}</div>
                             </div>
                         )
