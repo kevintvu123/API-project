@@ -1,27 +1,28 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../../store/spots";
-import './UserSpots.css'
 import EditSpotFormModal from "../EditSpotModal";
 import { deleteSpotThunk } from "../../../store/spots";
+import './UserSpots.css'
 
 const UserSpots = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const [hasSubmitted, setHasSubmitted] = useState(false)
+
     const sessionUser = useSelector(state => state.session.user);
-    
+
     useEffect(() => {
         dispatch(getUserSpotsThunk())
-    }, [dispatch])
-    
-    
+    }, [dispatch, hasSubmitted])
+
+
     const userSpots = useSelector(state => state.spot.userSpots)
 
     if (!sessionUser) return <Redirect to="/" />;
-    
+
     if (!userSpots) return null
 
     const userSpotsArr = userSpots.Spots
@@ -55,10 +56,11 @@ const UserSpots = () => {
                                     <div>{spot.description}</div>
                                     <div>Price: {spot.price}</div>
                                 </div>
-                                <EditSpotFormModal spot={spot} />
-                                <button onClick={() => {
-                                    dispatch(deleteSpotThunk(spot.id))
-                                    history.push('/')
+                                <EditSpotFormModal spot={spot} setHasSubmitted={setHasSubmitted}/>
+                                <button onClick={async () => {
+                                    dispatch(getUserSpotsThunk())
+                                        .then(dispatch(deleteSpotThunk(spot.id)))
+                                        .then(setHasSubmitted(!hasSubmitted))
                                 }}>
                                     Delete Spot
                                 </button>

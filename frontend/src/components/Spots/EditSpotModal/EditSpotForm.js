@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { editSpotThunk } from "../../../store/spots";
+import { getUserSpotsThunk } from "../../../store/spots";
 
 import './EditSpotForm.css'
 
-function EditSpotForm({ spot }) {
+function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
 
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch()
-    const history = useHistory();
 
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
@@ -24,14 +24,14 @@ function EditSpotForm({ spot }) {
 
     if (!sessionUser) return <Redirect to="/" />;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
 
-        return dispatch(editSpotThunk({ address, city, state, country, lat, lng, name, description, price }, spot.id))
-            .then((response) => {
-                history.push(`/spots/${response.id}`)
-            })
+        return dispatch(getUserSpotsThunk())
+            .then(dispatch(editSpotThunk({ address, city, state, country, lat, lng, name, description, price }, spot.id)))
+            .then(setHasSubmitted(prevVal => !prevVal))
+            .then(setShowModal(false))
             .catch(
                 async (res) => {
                     const data = await res.json();

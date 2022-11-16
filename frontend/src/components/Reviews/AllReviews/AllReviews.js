@@ -19,7 +19,6 @@ const AllReviews = () => {
     if (!allReviews) return null
 
     const allReviewsArr = Object.values(allReviews)
-    console.log(allReviewsArr)
 
     return (
         <>

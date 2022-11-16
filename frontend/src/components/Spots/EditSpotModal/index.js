@@ -4,7 +4,7 @@ import { Modal } from "../../../context/Modal";
 import EditSpotForm from "./EditSpotForm";
 
 
-function EditSpotFormModal({ spot }) {
+function EditSpotFormModal({ spot, setHasSubmitted }) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -12,7 +12,7 @@ function EditSpotFormModal({ spot }) {
             <button onClick={() => setShowModal(true)}>Edit Spot</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    <EditSpotForm setShowModal={setShowModal} spot={spot} />
+                    <EditSpotForm setShowModal={setShowModal} spot={spot} setHasSubmitted={setHasSubmitted}/>
                 </Modal>
             )}
         </>

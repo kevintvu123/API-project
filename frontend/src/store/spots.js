@@ -166,7 +166,8 @@ const spotsReducer = (state = initialState, action) => {
             return createdSpot
         case EDIT_SPOT:
             const editedSpot = action.payload
-            return editedSpot
+            newState[editedSpot.id] = editedSpot
+            return newState
         case DELETE_SPOT:
             const deletedSpotId = action.payload
             delete newState.userSpots[deletedSpotId]

@@ -33,15 +33,16 @@ function ProfileButton({ user, setLogin, setShowModal }) {
     return (
         <>
             <div className="dropdown">
-            <button className="profileButton" onClick={openMenu}>
-                <i className="fas fa-user-circle" />
-            </button>
+                <button className="profileButton" onClick={openMenu}>
+                    <i className="fas fa-user-circle" />
+                </button>
                 <div className="dropdownMenu">
                     {showMenu && (user ?
                         (<ul className="profile-dropdown">
                             <li>{user.username}</li>
                             <li>{user.email}</li>
-                            <NavLink className='manageListing' to={'/spots/current'}>Manage Listings</NavLink>
+                            <li><NavLink className='manageListing' to={'/spots/current'}>Manage Listings</NavLink></li>
+                            <li><NavLink to={'/reviews/current'}>Manage Reviews</NavLink></li>
                             <li>
                                 <button onClick={logout}>Log Out</button>
                             </li>

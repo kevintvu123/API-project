@@ -1,20 +1,24 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpotDetailsThunk } from "../../../store/spots";
 import AllReviews from "../../Reviews/AllReviews/AllReviews";
+import CreateReviewFormModal from "../../Reviews/CreateReviewModal";
 import './SpotDetails.css'
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
 
-    useEffect(() => {
-        dispatch(getSpotDetailsThunk(spotId))
-    }, [dispatch, spotId])
+    const [hasSubmitted, setHasSubmitted] = useState(false)
 
     const spot = useSelector(state => state.spot.spotDetails)
+
+    useEffect(() => {
+        dispatch(getSpotDetailsThunk(spotId))
+    }, [dispatch, spotId, hasSubmitted])
+
 
     if (!spot) return null
 
@@ -39,6 +43,7 @@ const SpotDetails = () => {
                     </li>
                 </ul>
             </div>
+            <CreateReviewFormModal spotId={spotId} setHasSubmitted={setHasSubmitted}/>
             <AllReviews />
         </>
     )
