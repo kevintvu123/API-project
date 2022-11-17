@@ -1,0 +1,29 @@
+ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+img {
+    height: 30px;
+}
+
+.profile-pic-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.review-container {
+    /* border: 1px solid black; */
+    margin-bottom: 30px;
+    width: 590px;
+    font-size: 16px;
+}
+
+.review-user {
+    font-weight: 600;
+    margin-left: 10px;
+}

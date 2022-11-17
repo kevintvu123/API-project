@@ -1,27 +1,29 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom";
 import { getUserSpotsThunk } from "../../../store/spots";
-import './UserSpots.css'
-import EditSpotFormModal from "../../EditSpotModal";
+import EditSpotFormModal from "../EditSpotModal";
 import { deleteSpotThunk } from "../../../store/spots";
+import './UserSpots.css'
 
 const UserSpots = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const [hasSubmitted, setHasSubmitted] = useState(false)
+
     const sessionUser = useSelector(state => state.session.user);
-    
+
     useEffect(() => {
         dispatch(getUserSpotsThunk())
-    }, [dispatch])
-    
-    
+        setHasSubmitted(false)
+    }, [dispatch, hasSubmitted])
+
+
     const userSpots = useSelector(state => state.spot.userSpots)
 
     if (!sessionUser) return <Redirect to="/" />;
-    
+
     if (!userSpots) return null
 
     const userSpotsArr = userSpots.Spots
@@ -42,31 +44,55 @@ const UserSpots = () => {
 
     return (
         <>
-            <h1>Spots owned by {capitalize(sessionUser.firstName)} {capitalize(sessionUser.lastName)}:</h1>
-            <ul>
-                {
-                    userSpotsArr.map((spot) => {
-                        return (
-                            <div className='spot-card' key={spot.id}>
-                                <div onClick={() => handleClick(spot.id)}>
-                                    <h1>{spot.name}</h1>
-                                    <div>Spot Id: {spot.id}</div>
-                                    <div>Address: {spot.address}</div>
-                                    <div>{spot.description}</div>
-                                    <div>Price: {spot.price}</div>
-                                </div>
-                                <EditSpotFormModal spot={spot} />
-                                <button onClick={() => {
-                                    dispatch(deleteSpotThunk(spot.id))
-                                    history.push('/')
-                                }}>
-                                    Delete Spot
-                                </button>
-                            </div>
-                        )
-                    })
-                }
-            </ul>
+            <div className="big-container">
+                <div className="small-container">
+                    <div className="smaller-container">
+
+                        <div className="heading-container">
+                            <h1>Spots hosted by {capitalize(sessionUser.firstName)} {capitalize(sessionUser.lastName)}:</h1>
+                        </div>
+
+                        <div className="userSpots-container">
+                            <ul>
+                                {
+                                    userSpotsArr.map((spot) => {
+                                        return (
+                                            <div className='userpot-card' key={spot.id}>
+                                                <div className="buttonAndInfo">
+                                                    <div onClick={() => handleClick(spot.id)}>
+                                                        <div className="userSpotHeading">
+                                                            <h2>{spot.name}</h2>
+                                                        </div>
+                                                        <div className="userSpotImageInformation">
+                                                            <img className="userSpotImage" src={spot.previewImage} alt='userSpotImage not found' />
+                                                            <div className="userSpotInfoOnly">
+                                                                <div>${spot.price} /night</div>
+                                                                <div>★ {spot.avgRating}</div>
+                                                                <div>{spot.city}, {spot.state}, {spot.country}</div>
+                                                                <div>Description: {spot.description}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="editDeleteButtonContainer">
+                                                        <EditSpotFormModal spot={spot} setHasSubmitted={setHasSubmitted} />
+                                                        <button className="createReviewButton" onClick={async () => {
+                                                            dispatch(getUserSpotsThunk())
+                                                                .then(dispatch(deleteSpotThunk(spot.id)))
+                                                                .then(setHasSubmitted(!hasSubmitted))
+                                                        }}>
+                                                            Delete Spot
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

@@ -6,7 +6,7 @@
     list-style-type: none;
     display: flex;
     justify-content: center;
-    
+
 }
 
 .navListItem {
@@ -20,7 +20,7 @@
     height: 40px;
 }
 
-.profileButton{
+.profileButton {
     height: 40px;
     width: 80px;
     border-radius: 100px;
@@ -28,7 +28,7 @@
     background-color: white;
 }
 
-.profileButton:hover{
+.profileButton:hover {
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -50,13 +50,99 @@
     position: absolute;
     right: 0px;
     top: 50px;
-    background-color: white;
-    border-radius: .25rem;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
 .profile-dropdown {
+    background-color: white;
+    width: 220px;
+    height: 180px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* align-content: center; */
 }
 
+.profile-dropdown>div {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.firstSectionMenu {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.secondSectionMenu {
+    /* border: 1px solid black; */
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.manageDiv {
+    margin-bottom: 5px;
+}
+
+.secondNavLinks {
+    margin-left: 20px;
+    margin-bottom: 5px;
+
+}
+
+.buttonDiv {
+    padding-bottom: 10px;
+}
+
+.logoutButton {
+    border: none;
+    background-color: white;
+    display: flex;
+    width: 100%;
+    height: 25px;
+    font-size: 16px;
+}
+
+.secondNavLinks:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+.logoutButton:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+.loginButton {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    height: 60px;
+    width: 100%;
+    font-size: 16px;
+    background-color: white;
+    border: none;
+}
+
+.signupButton {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 100%;
+    font-size: 16px;
+    background-color: white;
+    border: none;
+}
+
+.loginButton:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+.signupButton:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+.line {
+    height: 1px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+}

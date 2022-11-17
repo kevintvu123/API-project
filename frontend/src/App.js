@@ -9,6 +9,7 @@ import AllSpots from "./components/Spots/AllSpots/AllSpots";
 import * as sessionActions from "./store/session";
 import SpotDetails from "./components/Spots/SpotDetails/SpotDetails";
 import UserSpots from "./components/Spots/UserSpots/UserSpots";
+import UserReviews from "./components/Reviews/UserReviews/UserReviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
         </Route>
         <Route exact path='/spots/:spotId'>
           <SpotDetails />
+        </Route>
+        <Route exact path='/reviews/current'>
+          <UserReviews />
         </Route>
       </Switch>
     </>

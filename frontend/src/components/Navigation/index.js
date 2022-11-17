@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import CreateSpotFormModal from '../CreateSpotModal'
+import CreateSpotFormModal from '../Spots/CreateSpotModal';
 import './Navigation.css';
 import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';

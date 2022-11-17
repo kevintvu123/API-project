@@ -15,33 +15,33 @@ module.exports = {
     return queryInterface.bulkInsert('Reviews', [
       {
         spotId: 1,
-        userId: 1,
-        review: 'review for spot 1',
+        userId: 3,
+        review: 'This was meh',
         stars: 1
       },
       {
         spotId: 1,
         userId: 2,
-        review: 'review for spot 1',
-        stars: 2
+        review: 'It was aiight',
+        stars: 4
       },
       {
         spotId: 2,
-        userId: 2,
-        review: 'review for spot 2',
+        userId: 1,
+        review: 'Never again',
         stars: 2
-      },
-      {
-        spotId: 3,
-        userId: 3,
-        review: 'review for spot 3',
-        stars: 3
       },
       {
         spotId: 3,
         userId: 4,
-        review: 'review for spot 3',
-        stars: 4
+        review: 'Found a cockroach',
+        stars: 2
+      },
+      {
+        spotId: 3,
+        userId: 2,
+        review: 'idk anymore',
+        stars: 5
       }
     ])
   },

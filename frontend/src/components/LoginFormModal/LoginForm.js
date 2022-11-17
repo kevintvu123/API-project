@@ -22,32 +22,38 @@ function LoginForm({ setShowModal }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => (
-                    <li key={idx}>{error}</li>
-                ))}
-            </ul>
-            <label>
-                Username or Email
-                <input
-                    type="text"
-                    value={credential}
-                    onChange={(e) => setCredential(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Log In</button>
-        </form>
+        <div className="form-container">
+            <div className="form-header">Sign In</div>
+            <div className="form-div">
+
+                <form className="createSpotForm" onSubmit={handleSubmit}>
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <input
+                        className="host-input"
+                        type="text"
+                        value={credential}
+                        onChange={(e) => setCredential(e.target.value)}
+                        placeholder='Username or Email'
+                        required
+                    />
+                    <input
+                        className="host-input"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder='Password'
+                        required
+                    />
+                    <button className="hostButton1" type="submit">Log In</button>
+                </form>
+
+            </div>
+
+        </div >
     );
 }
 

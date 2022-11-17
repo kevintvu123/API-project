@@ -1,0 +1,60 @@
+.big-container {
+    /* border: solid 1px black; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+}
+
+.small-container {
+    /* border: solid 1px black; */
+    width: 1200px;
+    height: 100%;
+}
+
+.heading-container {
+    /* border: solid 1px red; */
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.userSpotImageInformation {
+    /* border: black solid 1px; */
+    border-bottom: 1px solid rgb(192, 192, 192);
+    padding-bottom: 30px;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.userSpotImage {
+    border-radius: 12px;
+    margin-right: 10px;
+    height: 250px;
+    width: 350px;
+}
+
+.userSpotInfoOnly {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 18px;
+}
+
+.buttonAndInfo {
+    /* border: black solid 1px; */
+    display: flex;
+}
+
+.editDeleteButtonContainer {
+    padding: 60px 0;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
