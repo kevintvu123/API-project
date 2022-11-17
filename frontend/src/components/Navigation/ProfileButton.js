@@ -30,6 +30,13 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         dispatch(sessionActions.logout());
     };
 
+    const capitalize = (name) => {
+        const firstLetter = name.charAt(0)
+        const upperFirstLetter = firstLetter.toUpperCase()
+        const restWord = name.slice(1)
+        return upperFirstLetter + restWord
+    }
+
     return (
         <>
             <div className="dropdown">
@@ -39,27 +46,32 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                 <div className="dropdownMenu">
                     {showMenu && (user ?
                         (<ul className="profile-dropdown">
-                            <li>{user.username}</li>
-                            <li>{user.email}</li>
-                            <li><NavLink className='manageListing' to={'/spots/current'}>Manage Listings</NavLink></li>
-                            <li><NavLink to={'/reviews/current'}>Manage Reviews</NavLink></li>
-                            <li>
-                                <button onClick={logout}>Log Out</button>
-                            </li>
+                            <div className="firstSectionMenu">
+                                <div>Hello {capitalize(user.firstName)} {capitalize(user.lastName)}!</div>
+                            </div>
+                            <div className="secondSectionMenu">
+                                <div className="manageDiv">Manage Your: </div>
+                                <div className="secondNavLinks"><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/spots/current'}>Listings</NavLink></div>
+                                <div className="secondNavLinks"><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/reviews/current'}>Reviews</NavLink></div>
+                            </div>
+                            <div className="buttonDiv">
+                                <button className="logoutButton" onClick={logout}>Log Out</button>
+                            </div>
                         </ul>) :
                         (<ul className="profile-dropdown">
-                            <li>
-                                <button onClick={() => {
+                            <div>
+                                <button className="loginButton" onClick={() => {
                                     setLogin(true)
                                     setShowModal(true)
                                 }}>Log In</button>
-                            </li>
-                            <li>
-                                <button onClick={() => {
+                            </div>
+                            <div className="line"></div>
+                            <div>
+                                <button className="signupButton" onClick={() => {
                                     setLogin(false)
                                     setShowModal(true)
                                 }}>Sign Up</button>
-                            </li>
+                            </div>
                         </ul>)
                     )}
                 </div>

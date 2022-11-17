@@ -35,30 +35,48 @@ const UserReviews = () => {
 
     return (
         <>
-            <h1>All Reviews made by {capitalize(sessionUser.firstName)} {capitalize(sessionUser.lastName)}:</h1>
-            <ul>
-                {
-                    userReviewsArr.map((review) => {
-                        return (
-                            <div key={review.id}>
-                                <div>
-                                    <div>Review: {review.review}</div>
-                                    <div>Stars: {review.stars}</div>
-                                    <div>For: {review.Spot.name}</div>
-                                    <img src={review.Spot.previewImage} alt={review.id} />
-                                </div>
-                                <button onClick={async () => {
-                                    dispatch(getUserReviewsThunk())
-                                        .then(dispatch(deleteSpotReviewThunk(review.id)))
-                                        .then(setHasSubmitted(!hasSubmitted))
-                                }}>
-                                    Delete Review
-                                </button>
-                            </div>
-                        )
-                    })
-                }
-            </ul>
+            <div className="big-container">
+                <div className="small-container">
+                    <div className="smaller-container">
+                        <div className="heading-container">
+                            <h1>All Reviews made by {capitalize(sessionUser.firstName)} {capitalize(sessionUser.lastName)}:</h1>
+                        </div>
+                        <div className="userReviews-container">
+                            <ul>
+                                {
+                                    userReviewsArr.map((review) => {
+                                        return (
+                                            <div className='userReview-card' key={review.id}>
+                                                <div className="buttonAndReviewInfo">
+                                                    <div className="userSpotHeading">
+                                                        <h2>{review.Spot.name}</h2>
+                                                    </div>
+                                                    <div className="userSpotImageInformation">
+                                                        <img className="userReviewImage" src={review.Spot.previewImage} alt={review.id} />
+                                                        <div className="userReviewInfoOnly">
+                                                            <div>Review: {review.review}</div>
+                                                            <div>★ {review.stars}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="editDeleteButtonContainer">
+                                                    <button className="createReviewButton" onClick={async () => {
+                                                        dispatch(getUserReviewsThunk())
+                                                            .then(dispatch(deleteSpotReviewThunk(review.id)))
+                                                            .then(setHasSubmitted(!hasSubmitted))
+                                                    }}>
+                                                        Delete Review
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 

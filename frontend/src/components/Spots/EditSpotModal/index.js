@@ -9,7 +9,7 @@ function EditSpotFormModal({ spot, setHasSubmitted }) {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)}>Edit Spot</button>
+            <button className="createReviewButton" onClick={() => setShowModal(true)}>Edit Spot</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     <EditSpotForm setShowModal={setShowModal} spot={spot} setHasSubmitted={setHasSubmitted}/>

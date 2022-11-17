@@ -4,7 +4,8 @@ import { Redirect } from "react-router-dom";
 import { editSpotThunk } from "../../../store/spots";
 import { getUserSpotsThunk } from "../../../store/spots";
 
-import './EditSpotForm.css'
+// import './EditSpotForm.css'
+import '../CreateSpotModal/CreateSpotForm.css'
 
 function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
 
@@ -41,77 +42,81 @@ function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => (
-                    <li key={idx}>{error}</li>
-                ))}
-            </ul>
-            <label>
-                Address
-                <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                City
-                <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                State
-                <input
-                    type="text"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Country
-                <input
-                    type="text"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Name
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Description
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Price
-                <input
-                    type="text"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Edit Spot</button>
-        </form>
+        <div className="form-container">
+            <div className="form-header">
+                Host Your Home on AirClone
+            </div>
+            <div className="form-div">
+                <form className="createSpotForm" onSubmit={handleSubmit}>
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <input
+                        className="host-input"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder='Name'
+                        required
+                    />
+                    <input
+                        className="host-input"
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder='Address'
+                        required
+                    />
+                    <div className="city-state">
+                        <input
+                            className="host-input1"
+                            type="text"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            placeholder='City'
+                            required
+                        />
+
+                        <input
+                            className="host-input1"
+                            type="text"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            placeholder='State'
+                            required
+                        />
+                    </div>
+                    <div className="country-price">
+                        <input
+                            className="host-input1"
+                            type="text"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            placeholder='Country'
+                            required
+                        />
+                        <input
+                            className="host-input1"
+                            type="number"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            placeholder='Price'
+                            required
+                        />
+                    </div>
+                    <textarea
+                        className="host-input-description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder='Description'
+                        required
+                    />
+                    <button className="hostButton1" type="submit">Host Spot</button>
+                </form>
+            </div>
+        </div>
     )
 
 }
