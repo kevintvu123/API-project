@@ -17,7 +17,7 @@ module.exports = {
         ownerId: 1,
         address: '213 Josh Tree',
         city: 'Joshua Tree',
-        state: 'california',
+        state: 'California',
         country: 'United States',
         lat: 1.1,
         lng: 1.1,
