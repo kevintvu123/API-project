@@ -36,7 +36,7 @@ const AllSpots = () => {
                                     <div className="imageDiv"><img className="spotImage" src={spot.previewImage} alt={`SpotImage ${spot.name}`} /></div>
                                     <div className="spotName-review">
                                         <div>{spot.city}, {spot.state}</div>
-                                        <div>★ {(spot.avgRating) ? (spot.avgRating).toFixed(1) : 'New'}</div>
+                                        <div>★ {Number(spot.avgRating) ? Number(spot.avgRating).toFixed(1) : 'New'}</div>
                                     </div>
                                     <div className="fake-added">Added {Math.floor(Math.random() * 11)} weeks ago</div>
                                     <div>${spot.price} night</div>

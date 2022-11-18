@@ -66,7 +66,7 @@ const UserSpots = () => {
                                                             <img className="userSpotImage" src={spot.previewImage} alt='userSpotImage not found' />
                                                             <div className="userSpotInfoOnly">
                                                                 <div>${spot.price} /night</div>
-                                                                <div>★ {(spot.avgRating) ? (spot.avgRating).toFixed(1) : 'No Reviews'}</div>
+                                                                <div>★ {Number(spot.avgRating) ? Number(spot.avgRating).toFixed(1) : 'No Reviews'}</div>
                                                                 <div>{spot.city}, {spot.state}, {spot.country}</div>
                                                                 <div>Description: {spot.description}</div>
                                                             </div>

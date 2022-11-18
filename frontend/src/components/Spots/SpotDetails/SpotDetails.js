@@ -62,7 +62,7 @@ const SpotDetails = () => {
                 <div className="itemContainer">
                     <div className="titleBox">
                         <div className="spotName"><h1>{spot.name}</h1></div>
-                        <div className="sub-heading">★{(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'New'} · {spot.numReviews} reviews · Superhost · {spot.city}, {spot.state}, {spot.country}</div>
+                        <div className="sub-heading">★{Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'New'} · {spot.numReviews} reviews · Superhost · {spot.city}, {spot.state}, {spot.country}</div>
                     </div>
 
                     <div className="imageContainer">
@@ -94,7 +94,7 @@ const SpotDetails = () => {
                             <div className="booking-component">
                                 <div className="price-rating-booking">
                                     <div className="price-booking"><span className="price">${spot.price}</span> night</div>
-                                    <div className="rating-booking">★{(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'No Reviews'}·<span className="review-gray">{spot.numReviews} reviews</span></div>
+                                    <div className="rating-booking">★{Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'No Reviews'}·<span className="review-gray">{spot.numReviews} reviews</span></div>
                                 </div>
                                 <div className="checkin-checkout">
                                 </div>
@@ -116,7 +116,7 @@ const SpotDetails = () => {
                     </div>
                     <div className="reviews-container">
                         <div className="createReviewButton-container">
-                            <div className="reviews-header">★ {(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'No Reviews'} · {spot.numReviews} reviews</div>
+                            <div className="reviews-header">★ {Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'No Reviews'} · {spot.numReviews} reviews</div>
                             <div>
                                 <CreateReviewFormModal spotId={spotId} setHasSubmitted={setHasSubmitted} />
                             </div>
