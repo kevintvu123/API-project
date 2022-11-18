@@ -15,20 +15,21 @@ const SpotDetails = () => {
     const { spotId } = useParams()
 
     const [hasSubmitted, setHasSubmitted] = useState(false)
+    const [allReviews, setallReviews] = useState('')
+    const sessionUser = useSelector(state => state.session.user);
 
     const spot = useSelector(state => state.spot.spotDetails)
-    const allReviews = useSelector(state => state.review.allReviews)
 
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
-            .then(() =>
-                dispatch(getSpotReviewsThunk(spotId))
-            )
     }, [dispatch, spotId, hasSubmitted])
 
+    useEffect(() => {
+        dispatch(getSpotReviewsThunk(spotId))
+            .then((data) => setallReviews(data))
+    }, [dispatch, spotId, hasSubmitted])
 
     if (!spot) return null
-    if (!allReviews) return null
 
     let spotImageArr = spot.SpotImages
 
@@ -61,7 +62,7 @@ const SpotDetails = () => {
                 <div className="itemContainer">
                     <div className="titleBox">
                         <div className="spotName"><h1>{spot.name}</h1></div>
-                        <div className="sub-heading">★{spot.avgStarRating}·{spot.numReviews} reviews ·Superhost ·{spot.city}, {spot.state}, {spot.country}</div>
+                        <div className="sub-heading">★{(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'New'} · {spot.numReviews} reviews · Superhost · {spot.city}, {spot.state}, {spot.country}</div>
                     </div>
 
                     <div className="imageContainer">
@@ -93,21 +94,21 @@ const SpotDetails = () => {
                             <div className="booking-component">
                                 <div className="price-rating-booking">
                                     <div className="price-booking"><span className="price">${spot.price}</span> night</div>
-                                    <div className="rating-booking">★{spot.avgStarRating}·<span className="review-gray">{spot.numReviews} reviews</span></div>
+                                    <div className="rating-booking">★{(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'No Reviews'}·<span className="review-gray">{spot.numReviews} reviews</span></div>
                                 </div>
                                 <div className="checkin-checkout">
                                 </div>
-                                <button className="reserveButton">Reserve</button>
+                                <button className="reserveButton">Currently Unavailable</button>
                                 <div className="charge-message">You won't be charged yet</div>
                                 <div className="price-block">
                                     <div className="seven-night">
                                         <span className="prior-calc">${spot.price} x 7 nights</span><span>${(spot.price) * 7}</span>
                                     </div>
                                     <div className="seven-night">
-                                        <span className="prior-calc">Cleaning Fee</span><span>${(spot.price) * .05}</span>
+                                        <span className="prior-calc">Cleaning Fee</span><span>${((spot.price) * .05).toFixed(0)}</span>
                                     </div>
                                     <div className="seven-night">
-                                        <span className="prior-calc">Service Fee</span><span>${(spot.price) * .15}</span>
+                                        <span className="prior-calc">Service Fee</span><span>${((spot.price) * .15).toFixed(0)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -115,13 +116,13 @@ const SpotDetails = () => {
                     </div>
                     <div className="reviews-container">
                         <div className="createReviewButton-container">
-                            <div className="reviews-header">★ {spot.avgStarRating} · {spot.numReviews} reviews</div>
+                            <div className="reviews-header">★ {(spot.avgStarRating) ? (spot.avgStarRating).toFixed(1) : 'No Reviews'} · {spot.numReviews} reviews</div>
                             <div>
                                 <CreateReviewFormModal spotId={spotId} setHasSubmitted={setHasSubmitted} />
                             </div>
                         </div>
 
-                        <AllReviews allReviews={allReviews} />
+                        <AllReviews allReviews={allReviews.Reviews} />
                     </div>
                 </div>
             </div>

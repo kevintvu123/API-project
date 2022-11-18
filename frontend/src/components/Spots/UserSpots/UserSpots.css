@@ -40,10 +40,15 @@
 
 .userSpotInfoOnly {
     width: 600px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     font-size: 18px;
+}
+
+.clickingDiv {
+    cursor: pointer;
 }
 
 .buttonAndInfo {

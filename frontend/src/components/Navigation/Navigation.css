@@ -17,7 +17,7 @@
 }
 
 .airbnbLogo {
-    height: 40px;
+    height:80px;
 }
 
 .profileButton {
@@ -88,6 +88,7 @@
 .secondNavLinks {
     margin-left: 20px;
     margin-bottom: 5px;
+    /* width: 100%; */
 
 }
 

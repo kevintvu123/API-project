@@ -55,12 +55,12 @@ const UserReviews = () => {
                                                         <img className="userReviewImage" src={review.Spot.previewImage} alt={review.id} />
                                                         <div className="userReviewInfoOnly">
                                                             <div>Review: {review.review}</div>
-                                                            <div>★ {review.stars}</div>
+                                                            <div>★ {(review.stars).toFixed(1)}</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="editDeleteButtonContainer">
-                                                    <button className="createReviewButton" onClick={async () => {
+                                                    <button className="createReviewButton deleteReviewButton" onClick={async () => {
                                                         dispatch(getUserReviewsThunk())
                                                             .then(dispatch(deleteSpotReviewThunk(review.id)))
                                                             .then(setHasSubmitted(!hasSubmitted))

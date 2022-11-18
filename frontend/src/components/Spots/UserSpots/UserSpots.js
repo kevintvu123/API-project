@@ -23,7 +23,6 @@ const UserSpots = () => {
     const userSpots = useSelector(state => state.spot.userSpots)
 
     if (!sessionUser) return <Redirect to="/" />;
-
     if (!userSpots) return null
 
     const userSpotsArr = userSpots.Spots
@@ -59,7 +58,7 @@ const UserSpots = () => {
                                         return (
                                             <div className='userpot-card' key={spot.id}>
                                                 <div className="buttonAndInfo">
-                                                    <div onClick={() => handleClick(spot.id)}>
+                                                    <div className="clickingDiv" onClick={() => handleClick(spot.id)}>
                                                         <div className="userSpotHeading">
                                                             <h2>{spot.name}</h2>
                                                         </div>
@@ -67,7 +66,7 @@ const UserSpots = () => {
                                                             <img className="userSpotImage" src={spot.previewImage} alt='userSpotImage not found' />
                                                             <div className="userSpotInfoOnly">
                                                                 <div>${spot.price} /night</div>
-                                                                <div>★ {spot.avgRating}</div>
+                                                                <div>★ {(spot.avgRating) ? (spot.avgRating).toFixed(1) : 'No Reviews'}</div>
                                                                 <div>{spot.city}, {spot.state}, {spot.country}</div>
                                                                 <div>Description: {spot.description}</div>
                                                             </div>
