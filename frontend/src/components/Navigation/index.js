@@ -8,7 +8,7 @@ import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupForm from '../SignupFormModal/SignupForm';
 
-import AirbnbLogo from "../../resources/images/airbnb-logo.png"
+import AirbnbLogo from "../../resources/images/Airclone-Logo.png"
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);

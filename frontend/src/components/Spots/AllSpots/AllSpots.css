@@ -20,6 +20,7 @@
     margin: 10px;
     /* border: solid 1px; */
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .imageDiv {
@@ -27,9 +28,25 @@
     width: 280px;
     border-radius: 10px;
 }
+
 .spotImage {
     height: 270px;
     width: 280px;
     border-radius: 10px;
 }
 
+.spotName-review {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fake-added {
+    color: gray;
+    font-size: 15px;
+}
+
+.spotDetail-price {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}

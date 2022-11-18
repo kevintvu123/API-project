@@ -4,6 +4,8 @@ import profilePic from '../../../resources/images/blank-profile-circle.png'
 
 const AllReviews = ({ allReviews }) => {
 
+    if (!allReviews) return null
+    
     const allReviewsArr = Object.values(allReviews)
 
     const capitalize = (name) => {

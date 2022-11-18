@@ -42,7 +42,7 @@ export const getSpotReviewsThunk = (spotId) => async dispatch => {
     if (response.ok) {
         const spotReviews = await response.json();
         dispatch(getSpotReviews(spotReviews))
-        return response;
+        return spotReviews;
     }
 }
 
@@ -94,7 +94,7 @@ const reviewsReducer = (state = {}, action) => {
             return newState
         case CREATE_SPOT_REVIEW:
             const createdReview = action.payload
-            newState.allReviews[createdReview.id] = createdReview
+            // newState.allReviews[createdReview.id] = createdReview
             return createdReview
         case DELETE_SPOT_REVIEW:
             const deletedReviewId = action.payload

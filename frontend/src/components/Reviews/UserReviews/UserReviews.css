@@ -13,6 +13,7 @@
     width: 300px;
     height: 200px;
     margin-right: 20px;
+    border-radius: 12px;
 }
 
 .userReviewInfoOnly {
@@ -22,4 +23,15 @@
     flex-direction: column;
     justify-content: space-around;
     font-size: 18px;
+}
+
+.editDeleteButtonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.deleteReviewButton {
+    margin-right: 0px;
+    margin-left: 20px;
 }

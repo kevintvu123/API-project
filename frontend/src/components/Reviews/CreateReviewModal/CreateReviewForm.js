@@ -14,9 +14,9 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        return dispatch(getSpotDetailsThunk(spotId))
-            .then(dispatch(createSpotReviewThunk({ review, stars }, spotId)))
-            .then(setHasSubmitted(prevValue => !prevValue))
+        return dispatch(createSpotReviewThunk({ review, stars }, spotId))
+            // .then(dispatch(createSpotReviewThunk({ review, stars }, spotId)))
+            .then(() => setHasSubmitted(prevValue => !prevValue))
             .then(() => setShowModal(false))
             .catch(
                 async (res) => {
