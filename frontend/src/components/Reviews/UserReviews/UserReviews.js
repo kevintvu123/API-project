@@ -55,7 +55,7 @@ const UserReviews = () => {
                                                         <img className="userReviewImage" src={review.Spot.previewImage} alt={review.id} />
                                                         <div className="userReviewInfoOnly">
                                                             <div>Review: {review.review}</div>
-                                                            <div>★ {(review.stars).toFixed(1)}</div>
+                                                            <div>★ {Number(review.stars).toFixed(1)}</div>
                                                         </div>
                                                     </div>
                                                 </div>
