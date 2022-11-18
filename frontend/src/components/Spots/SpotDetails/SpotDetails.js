@@ -56,6 +56,16 @@ const SpotDetails = () => {
         return upperFirstLetter + restWord
     }
 
+    let reviewButtonClassName
+
+    if (sessionUser) {
+        (spot.ownerId !== sessionUser.id) ? reviewButtonClassName = 'reviewModal' : reviewButtonClassName = 'noreviewModal'
+    }
+
+    if (!sessionUser) {
+        reviewButtonClassName = 'noUserVisibility'
+    }
+
     return (
         <>
             <div className="container">
@@ -117,7 +127,7 @@ const SpotDetails = () => {
                     <div className="reviews-container">
                         <div className="createReviewButton-container">
                             <div className="reviews-header">★ {Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'No Reviews'} · {spot.numReviews} reviews</div>
-                            <div>
+                            <div className={reviewButtonClassName}>
                                 <CreateReviewFormModal spotId={spotId} setHasSubmitted={setHasSubmitted} />
                             </div>
                         </div>

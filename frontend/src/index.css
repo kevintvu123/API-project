@@ -10,3 +10,10 @@ button {
     cursor: pointer;
 }
 
+input {
+    padding: 0 10px;
+}
+
+textarea {
+    padding: 10px 10px;
+}
