@@ -21,7 +21,11 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
+                    if (data && data.message) {
+                        const errorArr = []
+                        errorArr.push("You've already created a review!")
+                        setErrors(errorArr)
+                    };
                 }
             )
     }
@@ -33,11 +37,7 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
             </div>
             <div className="form-div">
                 <form className="createSpotForm" onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
+
                     <textarea
                         className="host-input-description"
                         value={review}
@@ -55,6 +55,11 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
                         placeholder='Star'
                         required
                     />
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
                     <button className="hostButton1" type="submit">Create Review</button>
                 </form>
             </div>

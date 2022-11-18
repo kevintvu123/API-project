@@ -16,22 +16,21 @@ function LoginForm({ setShowModal }) {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
+                    if (data && data.message) {
+                        const errorArr = []
+                        errorArr.push(data.message)
+                        setErrors(errorArr)
+                    };
                 }
             );
     };
 
     return (
         <div className="form-container">
-            <div className="form-header">Sign In</div>
+            <div className="form-header">Log In</div>
             <div className="form-div">
 
                 <form className="createSpotForm" onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
                     <input
                         className="host-input"
                         type="text"
@@ -39,7 +38,7 @@ function LoginForm({ setShowModal }) {
                         onChange={(e) => setCredential(e.target.value)}
                         placeholder='Username or Email'
                         required
-                    />
+                        />
                     <input
                         className="host-input"
                         type="password"
@@ -47,7 +46,12 @@ function LoginForm({ setShowModal }) {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Password'
                         required
-                    />
+                        />
+                        <ul>
+                            {errors.map((error, idx) => (
+                                <li key={idx}>{error}</li>
+                            ))}
+                        </ul>
                     <button className="hostButton1" type="submit">Log In</button>
                 </form>
 

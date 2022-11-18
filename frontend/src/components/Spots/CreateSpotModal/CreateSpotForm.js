@@ -119,7 +119,7 @@ function CreateSpotForm({ setShowModal }) {
                         required
                     />
                     <input
-                        type="text"
+                        type="url"
                         className="host-input"
                         value={previewImage}
                         onChange={(e) => setPreviewImage(e.target.value)}
