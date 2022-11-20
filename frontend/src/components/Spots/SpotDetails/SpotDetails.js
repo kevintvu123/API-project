@@ -16,6 +16,7 @@ const SpotDetails = () => {
 
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [allReviews, setallReviews] = useState('')
+    const [isLoaded, setIsLoaded] = useState(false)
     const sessionUser = useSelector(state => state.session.user);
 
     const spot = useSelector(state => state.spot.spotDetails)
@@ -27,9 +28,11 @@ const SpotDetails = () => {
     useEffect(() => {
         dispatch(getSpotReviewsThunk(spotId))
             .then((data) => setallReviews(data))
+            .then(() => setIsLoaded(true))
     }, [dispatch, spotId, hasSubmitted])
 
     if (!spot) return null
+    if (!isLoaded) return null
 
     let spotImageArr = spot.SpotImages
 
@@ -54,6 +57,16 @@ const SpotDetails = () => {
         const upperFirstLetter = firstLetter.toUpperCase()
         const restWord = name.slice(1)
         return upperFirstLetter + restWord
+    }
+
+    let reviewButtonClassName
+
+    if (sessionUser) {
+        (spot.ownerId !== sessionUser.id) ? reviewButtonClassName = 'reviewModal' : reviewButtonClassName = 'noreviewModal'
+    }
+
+    if (!sessionUser) {
+        reviewButtonClassName = 'noUserVisibility'
     }
 
     return (
@@ -117,7 +130,7 @@ const SpotDetails = () => {
                     <div className="reviews-container">
                         <div className="createReviewButton-container">
                             <div className="reviews-header">★ {Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'No Reviews'} · {spot.numReviews} reviews</div>
-                            <div>
+                            <div className={reviewButtonClassName}>
                                 <CreateReviewFormModal spotId={spotId} setHasSubmitted={setHasSubmitted} />
                             </div>
                         </div>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
+import './LoginForm.css'
+
 function LoginForm({ setShowModal }) {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
@@ -16,6 +18,7 @@ function LoginForm({ setShowModal }) {
             .catch(
                 async (res) => {
                     const data = await res.json();
+                    console.log(data)
                     if (data && data.message) {
                         const errorArr = []
                         errorArr.push(data.message)
@@ -24,6 +27,16 @@ function LoginForm({ setShowModal }) {
                 }
             );
     };
+
+    const handleDemoUser = () => {
+        return dispatch(sessionActions.login(
+            {
+                credential: "Demo-User",
+                password: "password"
+            }
+        ))
+            .then(() => setShowModal(false))
+    }
 
     return (
         <div className="form-container">
@@ -38,7 +51,7 @@ function LoginForm({ setShowModal }) {
                         onChange={(e) => setCredential(e.target.value)}
                         placeholder='Username or Email'
                         required
-                        />
+                    />
                     <input
                         className="host-input"
                         type="password"
@@ -46,14 +59,17 @@ function LoginForm({ setShowModal }) {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Password'
                         required
-                        />
-                        <ul>
-                            {errors.map((error, idx) => (
-                                <li key={idx}>{error}</li>
-                            ))}
-                        </ul>
+                    />
+                    <ul className="errorList">
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
                     <button className="hostButton1" type="submit">Log In</button>
                 </form>
+
+
+                <button className="hostButton1 demoButton" onClick={() => handleDemoUser()}>Demo User</button>
 
             </div>
 

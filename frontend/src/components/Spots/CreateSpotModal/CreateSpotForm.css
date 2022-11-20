@@ -28,6 +28,17 @@
     align-items: center;
 }
 
+.form-header1 {
+    height: 50px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-div {
     height: 600px;
     width: 600px;
@@ -99,6 +110,19 @@ textarea {
     background-color: rgb(219, 12, 100);
 }
 
-.hostButton1:hover {
+.hostButton2 {
+    margin-left: 150px;
+    margin-top: 20px;
+    height: 50px;
+    width: 200px;
+    border-radius: 12px;
+    border: 1px solid gray;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(219, 12, 100);
+}
+
+.hostButton2:hover {
     box-shadow: 5px 5px 5px 4px rgba(0, 0, 0, 0.2);
 }

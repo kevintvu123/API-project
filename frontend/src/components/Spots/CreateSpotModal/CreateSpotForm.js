@@ -37,7 +37,7 @@ function CreateSpotForm({ setShowModal }) {
                 setPreviewImage('')
                 history.push(`/spots/${response.id}`)
             })
-            .then(setShowModal(false))
+            .then(() => setShowModal(false))
             .catch(
                 async (res) => {
                     const data = await res.json();
@@ -48,16 +48,11 @@ function CreateSpotForm({ setShowModal }) {
 
     return (
         <div className="form-container">
-            <div className="form-header">
+            <div className="form-header1">
                 Host Your Home on AirClone
             </div>
             <div className="form-div">
                 <form className="createSpotForm" onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
                     <input
                         className="host-input"
                         type="text"
@@ -126,7 +121,12 @@ function CreateSpotForm({ setShowModal }) {
                         placeholder='Preview Image'
                         required
                     />
-                    <button className="hostButton1" type="submit">Host Spot</button>
+                    <ul className="errorList">
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <button className="hostButton2" type="submit">Host Spot</button>
                 </form>
             </div>
         </div>

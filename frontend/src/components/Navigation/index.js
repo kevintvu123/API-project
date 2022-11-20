@@ -19,19 +19,19 @@ function Navigation({ isLoaded }) {
     <ul className='navBar'>
       <li className='navListItem'>
         <div>
-        <NavLink className='HomeButton' exact to="/"><img className='airbnbLogo' src={AirbnbLogo} alt='Logo' /></NavLink>
+          <NavLink className='HomeButton' exact to="/"><img className='airbnbLogo' src={AirbnbLogo} alt='Logo' /></NavLink>
         </div>
         <div className='profilehostDiv'>
           <div className='profileButtonDiv'>
-        {isLoaded && (
-          <ProfileButton 
-            user={sessionUser}
-            setLogin={setLogin}
-            setShowModal={setShowModal} />
-        )}
+            {isLoaded && (
+              <ProfileButton
+                user={sessionUser}
+                setLogin={setLogin}
+                setShowModal={setShowModal} />
+            )}
           </div>
           <div>
-        {sessionUser && <CreateSpotFormModal />}
+            {sessionUser && <CreateSpotFormModal />}
           </div>
         </div>
       </li >

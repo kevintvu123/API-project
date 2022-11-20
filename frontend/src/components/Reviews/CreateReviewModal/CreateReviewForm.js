@@ -18,16 +18,10 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
             // .then(dispatch(createSpotReviewThunk({ review, stars }, spotId)))
             .then(() => setHasSubmitted(prevValue => !prevValue))
             .then(() => setShowModal(false))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.message) {
-                        const errorArr = []
-                        errorArr.push("You've already created a review!")
-                        setErrors(errorArr)
-                    };
-                }
-            )
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
     }
 
     return (
@@ -55,7 +49,7 @@ function CreateReviewForm({ setShowModal, spotId, setHasSubmitted }) {
                         placeholder='Star'
                         required
                     />
-                    <ul>
+                    <ul className="errorList">
                         {errors.map((error, idx) => (
                             <li key={idx}>{error}</li>
                         ))}

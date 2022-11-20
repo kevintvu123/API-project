@@ -56,7 +56,7 @@ const UserSpots = () => {
                                 {
                                     userSpotsArr.map((spot) => {
                                         return (
-                                            <div className='userpot-card' key={spot.id}>
+                                            <div className='userspot-card' key={spot.id}>
                                                 <div className="buttonAndInfo">
                                                     <div className="clickingDiv" onClick={() => handleClick(spot.id)}>
                                                         <div className="userSpotHeading">

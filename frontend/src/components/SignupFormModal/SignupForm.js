@@ -26,7 +26,6 @@ function SignupForm({ setShowModal }) {
                 .then(() => setShowModal(false))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
                     if (data && data.errors) setErrors(data.errors);
                 });
         }
@@ -39,13 +38,9 @@ function SignupForm({ setShowModal }) {
             <div className="form-header">
                 Sign Up
             </div>
-
             <div className="form-div">
 
                 <form className="createSpotForm" onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                    </ul>
                     <div className="city-state">
                         <input
                             className="host-input1"
@@ -98,6 +93,9 @@ function SignupForm({ setShowModal }) {
                             required
                         />
                     </div>
+                    <ul className="errorList">
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
                     <button className="hostButton1" type="submit">Sign Up</button>
                 </form>
 
