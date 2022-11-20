@@ -15,11 +15,16 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Invalid email'),
+        .withMessage('Please enter a valid email')
+        .isLength({ max: 250 })
+        .withMessage('Please enter an email that is less than 250 characters'),
     check('username')
         .exists({ checkFalsy: true })
+        .withMessage('Username is required')
         .isLength({ min: 4 })
-        .withMessage('Username is required'),
+        .withMessage('Please enter a username that is greater than 4')
+        .isLength({ max: 30 })
+        .withMessage('Please enter a username that is less than 30 characters'),
     check('username')
         .not()
         .isEmail()
@@ -27,13 +32,19 @@ const validateSignup = [
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .withMessage('Password must be 6 characters or more.')
+        .isLength({ max: 250 })
+        .withMessage('Please enter a password that is less than 250 characters'),
     check('firstName')
         .exists({ checkFalsy: true })
-        .withMessage('First Name is required'),
+        .withMessage('First Name is required')
+        .isLength({ max: 250 })
+        .withMessage('Please enter a first name that is less than 250 characters'),
     check('lastName')
         .exists({ checkFalsy: true })
-        .withMessage('Last Name is required'),
+        .withMessage('Last Name is required')
+        .isLength({ max: 250 })
+        .withMessage('Please enter a last name that is less than 250 characters'),
     handleValidationErrors
 ];
 
@@ -45,7 +56,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     const isExistingEmail = await User.findOne({ where: { email: email } });        //Checks to find if email is in db
     if (isExistingEmail) {
         const err = Error('User already exists');
-        err.errors = { email: "User with that email already exists" };
+        err.errors = ["User with that email already exists"];
         err.status = 403;
         next(err);
     }
@@ -53,7 +64,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     const isExistingUsername = await User.findOne({ where: { username: username } });
     if (isExistingUsername) {
         const err = Error('User already exists');
-        err.errors = { username: "User with that username already exists" };
+        err.errors = ["User with that username already exists"];
         err.status = 403;
         next(err);
     }

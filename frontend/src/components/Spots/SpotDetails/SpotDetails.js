@@ -16,6 +16,7 @@ const SpotDetails = () => {
 
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [allReviews, setallReviews] = useState('')
+    const [isLoaded, setIsLoaded] = useState(false)
     const sessionUser = useSelector(state => state.session.user);
 
     const spot = useSelector(state => state.spot.spotDetails)
@@ -27,9 +28,11 @@ const SpotDetails = () => {
     useEffect(() => {
         dispatch(getSpotReviewsThunk(spotId))
             .then((data) => setallReviews(data))
+            .then(() => setIsLoaded(true))
     }, [dispatch, spotId, hasSubmitted])
 
     if (!spot) return null
+    if (!isLoaded) return null
 
     let spotImageArr = spot.SpotImages
 

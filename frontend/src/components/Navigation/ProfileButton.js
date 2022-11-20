@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import './Navigation.css'
 
 function ProfileButton({ user, setLogin, setShowModal }) {
     const dispatch = useDispatch();
+    const history = useHistory()
     const [showMenu, setShowMenu] = useState(false);
 
     const openMenu = () => {
@@ -30,11 +31,17 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         dispatch(sessionActions.logout());
     };
 
-    const capitalize = (name) => {
-        const firstLetter = name.charAt(0)
-        const upperFirstLetter = firstLetter.toUpperCase()
-        const restWord = name.slice(1)
-        return upperFirstLetter + restWord
+    const shortenUser = (username) => {
+        if (username.length > 20) {
+            const shortenedName = username.slice(0, 20)
+            const returnedName = shortenedName + '...'
+            return returnedName
+        }
+        return username
+    }
+
+    function handleClick(path) {
+        history.push(path)
     }
 
     return (
@@ -47,12 +54,12 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                     {showMenu && (user ?
                         (<ul className="profile-dropdown">
                             <div className="firstSectionMenu">
-                                <div>Hello {capitalize(user.firstName)} {capitalize(user.lastName)}!</div>
+                                <div>{shortenUser(user.username)}</div>
                             </div>
                             <div className="secondSectionMenu">
                                 <div className="manageDiv">Manage Your: </div>
-                                <div className="secondNavLinks"><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/spots/current'}>Listings</NavLink></div>
-                                <div className="secondNavLinks"><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/reviews/current'}>Reviews</NavLink></div>
+                                <div className="secondNavLinks" onClick={() => handleClick('/spots/current')}><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/spots/current'}>Listings</NavLink></div>
+                                <div className="secondNavLinks" onClick={() => handleClick('/reviews/current')}><NavLink style={{ textDecoration: 'none', color: 'black' }} to={'/reviews/current'}>Reviews</NavLink></div>
                             </div>
                             <div className="buttonDiv">
                                 <button className="logoutButton" onClick={logout}>Log Out</button>

@@ -13,16 +13,24 @@ const router = express.Router();
 const validateSpotCreate = [
     check('address')
         .exists({ checkFalsy: true })
-        .withMessage('Street address is required'),
+        .withMessage('Street address is required')
+        .isLength({ max: 100 })
+        .withMessage('Please enter less than 100 characters for address'),
     check('city')
         .exists({ checkFalsy: true })
-        .withMessage('City is required'),
+        .withMessage('City is required')
+        .isLength({ max: 100 })
+        .withMessage('Please enter less than 100 characters for city'),
     check('state')
         .exists({ checkFalsy: true })
-        .withMessage('State is required'),
+        .withMessage('State is required')
+        .isLength({ max: 100 })
+        .withMessage('Please enter less than 100 characters for state'),
     check('country')
         .exists({ checkFalsy: true })
-        .withMessage('Country is required'),
+        .withMessage('Country is required')
+        .isLength({ max: 100 })
+        .withMessage('Please enter less than 100 characters for country'),
     check('lat')
         .exists({ checkFalsy: true })
         .withMessage('Latititude is not valid'),
@@ -33,10 +41,12 @@ const validateSpotCreate = [
         .exists({ checkFalsy: true })
         .withMessage('Name is required')
         .isLength({ max: 50 })
-        .withMessage('Name must be less than 50 characters'),
+        .withMessage('Please enter a name that is less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .withMessage('Description is required')
+        .isLength({ max: 250 })
+        .withMessage('Please enter a description that is less than 250 characters'),
     check('price')
         .exists({ checkFalsy: true })
         .withMessage('Price per day is required'),
@@ -46,11 +56,13 @@ const validateSpotCreate = [
 const validateReviewCreate = [
     check('review')
         .exists({ checkFalsy: true })
-        .withMessage('Review text is required'),
+        .withMessage('Review text is required')
+        .isLength({ max: 250 })
+        .withMessage('Please enter a review that is less than 250 characters'),
     check('stars')
         .exists({ checkFalsy: true })
         .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
+        .withMessage('Stars must be an integer from 1-5'),
     handleValidationErrors
 ];
 

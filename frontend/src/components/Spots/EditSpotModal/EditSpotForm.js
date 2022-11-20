@@ -29,13 +29,13 @@ function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
         e.preventDefault();
 
 
-        return dispatch(getUserSpotsThunk())
-            .then(dispatch(editSpotThunk({ address, city, state, country, lat, lng, name, description, price }, spot.id)))
-            .then(setHasSubmitted(prevVal => !prevVal))
-            .then(setShowModal(false))
+        return (dispatch(editSpotThunk({ address, city, state, country, lat, lng, name, description, price }, spot.id)))
+            .then(() => setHasSubmitted(prevVal => !prevVal))
+            .then(() => setShowModal(false))
             .catch(
                 async (res) => {
                     const data = await res.json();
+                    console.log(data)
                     if (data && data.errors) setErrors(data.errors);
                 }
             )
@@ -48,11 +48,6 @@ function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
             </div>
             <div className="form-div">
                 <form className="createSpotForm" onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
                     <input
                         className="host-input"
                         type="text"
@@ -113,7 +108,12 @@ function EditSpotForm({ spot, setHasSubmitted, setShowModal }) {
                         placeholder='Description'
                         required
                     />
-                    <button className="hostButton1" type="submit">Host Spot</button>
+                    <ul className="errorList">
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <button className="hostButton2" type="submit">Host Spot</button>
                 </form>
             </div>
         </div>
