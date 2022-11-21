@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { editSpotThunk } from "../../../store/spots";
-import { getUserSpotsThunk } from "../../../store/spots";
+// import { getUserSpotsThunk } from "../../../store/spots";
 
 // import './EditSpotForm.css'
 import '../CreateSpotModal/CreateSpotForm.css'

@@ -29,12 +29,12 @@ const UserSpots = () => {
 
 
 
-    const capitalize = (name) => {
-        const firstLetter = name.charAt(0)
-        const upperFirstLetter = firstLetter.toUpperCase()
-        const restWord = name.slice(1)
-        return upperFirstLetter + restWord
-    }
+    // const capitalize = (name) => {
+    //     const firstLetter = name.charAt(0)
+    //     const upperFirstLetter = firstLetter.toUpperCase()
+    //     const restWord = name.slice(1)
+    //     return upperFirstLetter + restWord
+    // }
 
     function handleClick(spotId) {
         let path = `/spots/${spotId}`
@@ -43,52 +43,52 @@ const UserSpots = () => {
 
     return (
         <>
-            <div className="big-container">
-                <div className="small-container">
-                    <div className="smaller-container">
+            <div className="yourSpotsBigContainer">
+                <div className="yourSpotsSmallContainer">
+                    <div className="yourSpotsHeading">
+                        <h1>Your Spots</h1>
+                    </div>
 
-                        <div className="heading-container">
-                            <h1>Spots hosted by {capitalize(sessionUser.firstName)} {capitalize(sessionUser.lastName)}:</h1>
-                        </div>
-
-                        <div className="userSpots-container">
-                            <ul>
-                                {
-                                    userSpotsArr.map((spot) => {
-                                        return (
-                                            <div className='userspot-card' key={spot.id}>
-                                                <div className="buttonAndInfo">
-                                                    <div className="clickingDiv" onClick={() => handleClick(spot.id)}>
-                                                        <div className="userSpotHeading">
-                                                            <h2>{spot.name}</h2>
-                                                        </div>
-                                                        <div className="userSpotImageInformation">
-                                                            <img className="userSpotImage" src={spot.previewImage} alt='userSpotImage not found' />
-                                                            <div className="userSpotInfoOnly">
-                                                                <div>${spot.price} /night</div>
-                                                                <div>★ {Number(spot.avgRating) ? Number(spot.avgRating).toFixed(1) : 'No Reviews'}</div>
-                                                                <div>{spot.city}, {spot.state}, {spot.country}</div>
-                                                                <div>Description: {spot.description}</div>
-                                                            </div>
+                    <div className="yourSpotsBox">
+                        <ul>
+                            {
+                                userSpotsArr.map((spot) => {
+                                    return (
+                                        <div className="oneYourSpotBox" key={spot.id}>
+                                            <div className="oneYourSpotImageDesc" onClick={() => handleClick(spot.id)}>
+                                                <div className="oneYourSpotImage">
+                                                    <img src={spot.previewImage} alt='userSpotImage not found' />
+                                                </div>
+                                                <div className="oneYourSpotDescription">
+                                                    <div className="oneSpotName">
+                                                        <h2>{spot.name}</h2>
+                                                        <div>
+                                                            ★ {Number(spot.avgRating) ? Number(spot.avgRating).toFixed(1) : 'No Reviews'} · {spot.city}, {spot.state}, {spot.country}
                                                         </div>
                                                     </div>
-                                                    <div className="editDeleteButtonContainer">
-                                                        <EditSpotFormModal spot={spot} setHasSubmitted={setHasSubmitted} />
-                                                        <button className="createReviewButton" onClick={async () => {
-                                                            dispatch(getUserSpotsThunk())
-                                                                .then(dispatch(deleteSpotThunk(spot.id)))
-                                                                .then(setHasSubmitted(!hasSubmitted))
-                                                        }}>
-                                                            Delete Spot
-                                                        </button>
+                                                    <div className="oneSpotDescription">
+                                                        Description: {spot.description}
+                                                    </div>
+                                                    <div className="oneSpotPrice">
+                                                        <span>${spot.price}</span> /night
                                                     </div>
                                                 </div>
                                             </div>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
+                                            <div className="oneYourSpotButtons">
+                                                <EditSpotFormModal spot={spot} setHasSubmitted={setHasSubmitted} />
+                                                <button className="createReviewButton" onClick={async () => {
+                                                    dispatch(getUserSpotsThunk())
+                                                        .then(dispatch(deleteSpotThunk(spot.id)))
+                                                        .then(setHasSubmitted(!hasSubmitted))
+                                                }}>
+                                                    Delete Spot
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>
