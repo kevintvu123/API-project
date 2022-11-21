@@ -48,7 +48,8 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         <>
             <div className="dropdown">
                 <button className="profileButton" onClick={openMenu}>
-                    <i className="fas fa-user-circle" />
+                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-user"></i>
                 </button>
                 <div className="dropdownMenu">
                     {showMenu && (user ?

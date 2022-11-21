@@ -22,7 +22,7 @@ const validateSignup = [
         .exists({ checkFalsy: true })
         .withMessage('Username is required')
         .isLength({ min: 4 })
-        .withMessage('Please enter a username that is greater than 4')
+        .withMessage('Please enter a username that is greater than 3 characters')
         .isLength({ max: 30 })
         .withMessage('Please enter a username that is less than 30 characters'),
     check('username')
