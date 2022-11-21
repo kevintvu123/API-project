@@ -18,7 +18,9 @@ AirClone is a clone of AirBnB
 * Will add with completion of app
 
 ## Road Map
-* Will add after completion of app
+* Allowing Users to Update Reviews
+* Adding CRUD operations for Bookings
+* Google Maps API
 
 ## Get Started
 1. Clone repo
