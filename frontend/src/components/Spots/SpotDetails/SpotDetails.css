@@ -9,6 +9,7 @@
 .itemContainer {
     /* border: solid 1px black; */
     width: 1200px;
+    margin: 0 20px;
     display: flex;
     flex-direction: column;
 }
@@ -227,7 +228,7 @@
 }
 
 .prior-calc {
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 .reviews-container {

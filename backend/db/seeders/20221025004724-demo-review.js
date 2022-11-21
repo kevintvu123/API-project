@@ -15,33 +15,69 @@ module.exports = {
     return queryInterface.bulkInsert('Reviews', [
       {
         spotId: 1,
-        userId: 3,
-        review: 'This was meh',
-        stars: 1
+        userId: 2,
+        review: 'Really enjoyed this spot!',
+        stars: 5
       },
       {
         spotId: 1,
-        userId: 2,
-        review: 'It was aiight',
+        userId: 3,
+        review: 'Thought it was cool',
         stars: 4
       },
       {
         spotId: 2,
-        userId: 1,
-        review: 'Never again',
-        stars: 2
-      },
-      {
-        spotId: 3,
-        userId: 4,
-        review: 'Found a cockroach',
-        stars: 2
-      },
-      {
-        spotId: 3,
         userId: 2,
+        review: 'Would pay again',
+        stars: 3
+      },
+      {
+        spotId: 2,
+        userId: 3,
+        review: "Wouldn't pay again",
+        stars: 1
+      },
+      {
+        spotId: 3,
+        userId: 1,
+        review: 'Cool place',
+        stars: 4
+      },
+      {
+        spotId: 3,
+        userId: 3,
         review: 'idk anymore',
-        stars: 5
+        stars: 2
+      },
+      {
+        spotId: 4,
+        userId: 4,
+        review: 'Terrible place!',
+        stars: 1
+      },
+      {
+        spotId: 5,
+        userId: 4,
+        review: 'Meh',
+        stars: 3
+      },
+      {
+        spotId: 5,
+        userId: 1,
+        review: 'Decent place',
+        stars: 2
+      },
+      {
+        spotId: 6,
+        userId: 2,
+        review: "It's aiight",
+        stars: 3
+      },
+      {
+        spotId: 7,
+        userId: 5,
+        review: "Never coming back",
+        stars: 1
       }
     ])
   },

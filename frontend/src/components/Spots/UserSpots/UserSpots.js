@@ -36,6 +36,15 @@ const UserSpots = () => {
     //     return upperFirstLetter + restWord
     // }
 
+    const lengthShortener = (text) => {
+        if (text.length > 100) {
+            const shortenedText = text.slice(0, 99)
+            const returnedText = shortenedText + '...'
+            return returnedText
+        }
+        return text
+    }
+
     function handleClick(spotId) {
         let path = `/spots/${spotId}`
         history.push(path)
@@ -67,7 +76,7 @@ const UserSpots = () => {
                                                         </div>
                                                     </div>
                                                     <div className="oneSpotDescription">
-                                                        Description: {spot.description}
+                                                        Description: {lengthShortener(spot.description)}
                                                     </div>
                                                     <div className="oneSpotPrice">
                                                         <span>${spot.price}</span> /night

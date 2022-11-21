@@ -28,6 +28,10 @@
     background-color: white;
 }
 
+.fa-bars {
+    margin-right: 10px;
+}
+
 .profileButton:hover {
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
