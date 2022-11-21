@@ -82,11 +82,14 @@
     margin-bottom: 15px;
     border-radius: 12px;
     font-size: 16px;
+    font-family: 'Manrope', sans-serif;
 }
 
 textarea {
     border: solid black 2px;
     resize: none;
+    font-family: 'Manrope', sans-serif;
+    /* font-size: 2px; */
 }
 
 .host-input-description {
