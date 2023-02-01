@@ -14,6 +14,8 @@ const UserSpots = () => {
     const [hasSubmitted, setHasSubmitted] = useState(false)
 
     const sessionUser = useSelector(state => state.session.user);
+    const userSpots = useSelector(state => state.spot.userSpots)
+    const userBookings = useSelector(state => state.booking)
 
     useEffect(() => {
         dispatch(getUserSpotsThunk())
@@ -22,16 +24,13 @@ const UserSpots = () => {
     }, [dispatch, hasSubmitted])
 
 
-    const userSpots = useSelector(state => state.spot.userSpots)
-    const userBookings = useSelector(state => state.booking)
 
     if (!sessionUser) return <Redirect to="/" />;
-    if (!userSpots || !userBookings) return null
+    if (!userSpots) return null
+    if (Object.keys(userBookings).length === 0) return null
 
     const userSpotsArr = userSpots.Spots
     const userBookingsArr = userBookings.userBookingsArr
-
-    console.log(userBookingsArr)
 
     const lengthShortener = (text) => {
         if (text.length > 100) {
@@ -40,6 +39,13 @@ const UserSpots = () => {
             return returnedText
         }
         return text
+    }
+
+    function formatDate(date) {
+        const newDate = new Date(date)
+        const options = { month: 'short', day: 'numeric', year: 'numeric' }
+
+        return new Intl.DateTimeFormat('en-US', options).format(newDate)
     }
 
     function handleClick(spotId) {
@@ -67,6 +73,9 @@ const UserSpots = () => {
                                                 <div className="oneYourSpotDescription">
                                                     <div className="oneSpotName">
                                                         <h2>{booking.Spot.name}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <span>{formatDate(booking.startDate)} - {formatDate(booking.endDate)}</span>
                                                     </div>
                                                     <div className="oneSpotPrice">
                                                         <span>${booking.Spot.price}</span> /night

@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getSpotDetailsThunk } from "../../../store/spots";
 import { getSpotReviewsThunk } from "../../../store/reviews";
 import AllReviews from "../../Reviews/AllReviews/AllReviews";
@@ -9,16 +9,38 @@ import CreateReviewFormModal from "../../Reviews/CreateReviewModal";
 import './SpotDetails.css'
 
 import photo from '../../../resources/images/image-unavailable.jpg'
+import { postBookingsThunk } from "../../../store/bookings";
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const { spotId } = useParams()
+
+    function formatDate(date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    };
+
+    const formattedTodayDate = formatDate(new Date());
 
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [allReviews, setallReviews] = useState('')
     const [isLoaded, setIsLoaded] = useState(false)
-    const sessionUser = useSelector(state => state.session.user);
 
+    const [startDate, setStartDate] = useState(formattedTodayDate)
+    const [endDate, setEndDate] = useState(formattedTodayDate)
+    const [errors, setErrors] = useState('')
+
+    const sessionUser = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spot.spotDetails)
 
     useEffect(() => {
@@ -69,6 +91,27 @@ const SpotDetails = () => {
         reviewButtonClassName = 'noUserVisibility'
     }
 
+    const handleBookingSubmit = async (e) => {
+        const errors = []
+
+        const formattedStartDate = startDate.split('-').join('')
+        const formattedEndDate = endDate.split('-').join('')
+
+        if (formattedEndDate < formattedStartDate) {
+            errors.push('Check-In date must be before Checkout date')
+        }
+
+        setErrors(errors)
+
+        if (!errors.length) {
+            const submitBooking = await dispatch(
+                postBookingsThunk({ startDate: startDate, endDate: endDate }, spotId)
+            )
+                .then(() => history.push('/spots/current'))
+            return submitBooking
+        }
+    }
+
     return (
         <>
             <div className="container">
@@ -110,8 +153,46 @@ const SpotDetails = () => {
                                     <div className="rating-booking">★{Number(spot.avgStarRating) ? Number(spot.avgStarRating).toFixed(1) : 'No Reviews'}·<span className="review-gray">{spot.numReviews} reviews</span></div>
                                 </div>
                                 <div className="checkin-checkout">
+                                    <div className="date-selector-top">
+                                        <form>
+                                            <div className="start-date-selector">
+                                                <span>CHECK-IN</span>
+                                                <input
+                                                    className="date-input"
+                                                    type='date'
+                                                    value={startDate}
+                                                    onChange={(e) => setStartDate(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="end-date-selector">
+                                                <span>CHECKOUT</span>
+                                                <input
+                                                    className="date-input"
+                                                    type='date'
+                                                    value={endDate}
+                                                    onChange={(e) => setEndDate(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <button className="reserveButton">Reserve</button>
+                                <div className="error-map">
+                                    {errors.length > 0 && (
+                                        <div>
+                                            {errors.map((error) => (
+                                                <div key={error}>{error}</div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <button
+                                    className="reserveButton"
+                                    onClick={() => handleBookingSubmit()}
+                                >
+                                    Reserve
+                                </button>
                                 <div className="charge-message">You won't be charged yet</div>
                                 <div className="price-block">
                                     <div className="seven-night">
