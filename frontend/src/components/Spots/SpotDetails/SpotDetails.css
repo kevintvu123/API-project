@@ -185,8 +185,64 @@
 .checkin-checkout {
     margin-top: 20px;
     height: 100px;
-    /* border: 1px solid gray; */
+    border: 1px solid gray;
     border-radius: 12px;
+}
+
+
+.date-selector-top {
+    /* display: flex; */
+    border-bottom: 1px solid gray;
+    height: 50%;
+}
+
+.date-selector-top>form {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.start-date-selector {
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid gray;
+    height: 80%;
+    width: 50%;
+    padding: 1.5%;
+    /* border-radius: 12px; */
+}
+
+.end-date-selector {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+    padding: 1.5%;
+}
+
+.date-input {
+    border: none;
+}
+
+/* .date-input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+} */
+
+.date-input:focus {
+    outline: none;
+}
+
+.error-map {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    /* border: 1px solid red; */
 }
 
 .reserveButton {
@@ -225,10 +281,6 @@
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
-}
-
-.prior-calc {
-    /* text-decoration: underline; */
 }
 
 .reviews-container {

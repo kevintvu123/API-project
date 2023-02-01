@@ -5,6 +5,7 @@ import { getUserSpotsThunk } from "../../../store/spots";
 import EditSpotFormModal from "../EditSpotModal";
 import { deleteSpotThunk } from "../../../store/spots";
 import './UserSpots.css'
+import { getUserBookingsThunk } from "../../../store/bookings";
 
 const UserSpots = () => {
     const dispatch = useDispatch()
@@ -13,28 +14,23 @@ const UserSpots = () => {
     const [hasSubmitted, setHasSubmitted] = useState(false)
 
     const sessionUser = useSelector(state => state.session.user);
+    const userSpots = useSelector(state => state.spot.userSpots)
+    const userBookings = useSelector(state => state.booking)
 
     useEffect(() => {
         dispatch(getUserSpotsThunk())
+        dispatch(getUserBookingsThunk())
         setHasSubmitted(false)
     }, [dispatch, hasSubmitted])
 
 
-    const userSpots = useSelector(state => state.spot.userSpots)
 
     if (!sessionUser) return <Redirect to="/" />;
     if (!userSpots) return null
+    if (Object.keys(userBookings).length === 0) return null
 
     const userSpotsArr = userSpots.Spots
-
-
-
-    // const capitalize = (name) => {
-    //     const firstLetter = name.charAt(0)
-    //     const upperFirstLetter = firstLetter.toUpperCase()
-    //     const restWord = name.slice(1)
-    //     return upperFirstLetter + restWord
-    // }
+    const userBookingsArr = userBookings.userBookingsArr
 
     const lengthShortener = (text) => {
         if (text.length > 100) {
@@ -43,6 +39,13 @@ const UserSpots = () => {
             return returnedText
         }
         return text
+    }
+
+    function formatDate(date) {
+        const newDate = new Date(date)
+        const options = { month: 'short', day: 'numeric', year: 'numeric' }
+
+        return new Intl.DateTimeFormat('en-US', options).format(newDate)
     }
 
     function handleClick(spotId) {
@@ -55,9 +58,39 @@ const UserSpots = () => {
             <div className="yourSpotsBigContainer">
                 <div className="yourSpotsSmallContainer">
                     <div className="yourSpotsHeading">
-                        <h1>Your Spots</h1>
+                        <h1>Trips</h1>
                     </div>
-
+                    <div className="yourSpotsBox">
+                        <ul>
+                            {
+                                userBookingsArr.map((booking) => {
+                                    return (
+                                        <div className="oneYourSpotBox" key={booking.id}>
+                                            <div className="oneYourSpotImageDesc" onClick={() => handleClick(booking.spotId)}>
+                                                <div className="oneYourSpotImage">
+                                                    <img src={booking.Spot.previewImage} alt='userSpotImage not found' />
+                                                </div>
+                                                <div className="oneYourSpotDescription">
+                                                    <div className="oneSpotName">
+                                                        <h2>{booking.Spot.name}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <span>{formatDate(booking.startDate)} - {formatDate(booking.endDate)}</span>
+                                                    </div>
+                                                    <div className="oneSpotPrice">
+                                                        <span>${booking.Spot.price}</span> /night
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                    <div className="yourSpotsHeading">
+                        <h1>Listings</h1>
+                    </div>
                     <div className="yourSpotsBox">
                         <ul>
                             {
