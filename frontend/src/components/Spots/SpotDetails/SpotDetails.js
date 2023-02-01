@@ -111,7 +111,7 @@ const SpotDetails = () => {
                                 </div>
                                 <div className="checkin-checkout">
                                 </div>
-                                <button className="reserveButton">Currently Unavailable</button>
+                                <button className="reserveButton">Reserve</button>
                                 <div className="charge-message">You won't be charged yet</div>
                                 <div className="price-block">
                                     <div className="seven-night">
