@@ -112,7 +112,7 @@ const reqAuthBookingNotBelong = async (req, res, next) => {
     if (ownerId !== userId) {
         return next()
     } else {    //Error for unauthorized user
-        const err = Error("Spot couldn't be found");
+        const err = Error("An owner cannot book their own spot");
         err.status = 404
         return next(err);
     }
@@ -153,6 +153,7 @@ router.put('/:spotId', requireAuth, reqAuthorization, validateSpotCreate, async 
     res.json(findSpot)
 })
 
+//Create a Booking for a spot based on spotId
 router.post('/:spotId/bookings', requireAuth, reqAuthBookingNotBelong, async (req, res, next) => {
     const { spotId } = req.params
     const { startDate, endDate } = req.body
