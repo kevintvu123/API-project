@@ -79,9 +79,39 @@ module.exports = {
         preview: false
       },
       {
+        spotId: 3,
+        url: 'https://photos.zillowstatic.com/fp/2282bbfcbf2c59d86da6259fedf68031-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: 'https://photos.zillowstatic.com/fp/62fd94d7778fc137502d22678454ca6d-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
         spotId: 4,
         url: 'https://photos.zillowstatic.com/fp/5eda2632e2d579110aa89f651571c574-cc_ft_1536.webp',
         preview: true
+      },
+      {
+        spotId: 4,
+        url: 'https://photos.zillowstatic.com/fp/5e7fe201d1eeea56099a9ac39996cb3c-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: 'https://photos.zillowstatic.com/fp/e0746a737777cc237f7cfb31c371bcfd-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: 'https://photos.zillowstatic.com/fp/cdd379557b5bf7c4fb76d449afd5fe9d-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: 'https://photos.zillowstatic.com/fp/0944ca676196dbe5ef290781f59afcec-uncropped_scaled_within_1344_1008.webp',
+        preview: false
       },
       {
         spotId: 5,
@@ -89,9 +119,49 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 5,
+        url: 'https://photos.zillowstatic.com/fp/16e2eaa72c05a7b28ef227a33b1e55e6-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: 'https://photos.zillowstatic.com/fp/db1b14e0016c6fefed19e27d7d500c23-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: 'https://photos.zillowstatic.com/fp/58e6171d73a1183b4a3040113301b867-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: 'https://photos.zillowstatic.com/fp/28e3cffbe78914998d44bbea6175a2d3-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
         spotId: 6,
         url: 'https://photos.zillowstatic.com/fp/aa01baa5c7684082f997362e6cb50933-cc_ft_1536.webp',
         preview: true
+      },
+      {
+        spotId: 6,
+        url: 'https://photos.zillowstatic.com/fp/5426ffb3e86aa9584e13c24cb7c65e8d-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 6,
+        url: 'https://photos.zillowstatic.com/fp/ee9ac8e858e901654ecbf771d714cd01-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 6,
+        url: 'https://photos.zillowstatic.com/fp/ba8298ed3b65352ec2f8dde28da36ef5-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 6,
+        url: 'https://photos.zillowstatic.com/fp/5c859a82b2f08371714a3fab90572b90-uncropped_scaled_within_1344_1008.webp',
+        preview: false
       },
       {
         spotId: 7,
@@ -99,14 +169,74 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 7,
+        url: 'https://photos.zillowstatic.com/fp/3782e8300ab68bea0cdf8aa4904094fe-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 7,
+        url: 'https://photos.zillowstatic.com/fp/64ea62ad0c10ac410f2b83dbc4c94ec1-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 7,
+        url: 'https://photos.zillowstatic.com/fp/7b3d4e0364bb3e83f55b1b9a2e48724d-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 7,
+        url: 'https://photos.zillowstatic.com/fp/fb73fc8ffc24704938be84a8ce2fa775-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
         spotId: 8,
         url: 'https://photos.zillowstatic.com/fp/81a8b107c0d0c3cbcf4ed78ae66b00b2-cc_ft_1536.webp',
         preview: true
       },
       {
+        spotId: 8,
+        url: 'https://photos.zillowstatic.com/fp/383a7ca0592e0af197318a0d6ea83461-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 8,
+        url: 'https://photos.zillowstatic.com/fp/de40977cd2c1d9f6419e019ff6bd0f39-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 8,
+        url: 'https://photos.zillowstatic.com/fp/23e79142a039a0223cc585503f43e901-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 8,
+        url: 'https://photos.zillowstatic.com/fp/2b2004c9f686d98ceb0bedf2c78e3e55-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
         spotId: 9,
         url: 'https://photos.zillowstatic.com/fp/0958d2240734eeca981d604792ea01b0-cc_ft_384.webp',
         preview: true
+      },
+      {
+        spotId: 9,
+        url: 'https://photos.zillowstatic.com/fp/23bf0ed0664c125108623f22af00de6c-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 9,
+        url: 'https://photos.zillowstatic.com/fp/4023d6b0de1fc8116e9aecb3d0f73dc4-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 9,
+        url: 'https://photos.zillowstatic.com/fp/f09bf37571e17439c6681621bcc959ee-uncropped_scaled_within_1344_1008.webp',
+        preview: false
+      },
+      {
+        spotId: 9,
+        url: 'https://photos.zillowstatic.com/fp/c4a46609b98ff3df01dff8d4e170b1f0-uncropped_scaled_within_1344_1008.webp',
+        preview: false
       }
     ])
   },
